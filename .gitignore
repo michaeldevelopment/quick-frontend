@@ -10,6 +10,8 @@
 
 # production
 /build
+.env
+cypress.env.json
 
 # misc
 .DS_Store
