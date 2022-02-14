@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Poppins&display=swap");
+
+$original-color: #e74325;
+$hover-color-darker: #d33924;
+$border-button-color: #ea523d;
+
+$font-titles: "Poppins", sans-serif;
+$text: "Open Sans", sans-serif;
+
+.navbar {
+  font-family: $font-titles;
+
+  li {
+    color: grey;
+    list-style: none;
+  }
+
+  // span .navbar-toggler-icon {
+  //   color: black;
+  // }
+
+  .navbar-button,
+  .nav-dropdown {
+    background-color: $original-color;
+    color: white;
+    border-style: none;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $hover-color-darker;
+    }
+  }
+}
