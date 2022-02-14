@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Poppins&display=swap");
+
+$original-color: #e74325;
+$hover-color-darker: #d33924;
+$border-button-color: #ea523d;
+
+$font-titles: "Poppins", sans-serif;
+$text: "Open Sans", sans-serif;
+
+.user-form,
+.user-form[type="value"] {
+  font-family: $font-titles;
+  font-weight: 500;
+}
