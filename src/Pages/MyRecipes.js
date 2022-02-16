@@ -1,18 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-
+import { useParams } from "react-router-dom";
 import Recipe from "../Components/Recipe";
-import "./pages.scss";
 
-const Home = ({ recipes }) => {
+export default function MyRecipes({ recipes }) {
+  const [myRecipes, setMyRecipes] = useState([]);
+  const { id } = useParams();
+
+  const findRecipe = recipes.find((recipe) => recipe.user.id === id);
+  useEffect(() => setMyRecipes([...myRecipes, findRecipe]), []);
+
+  console.log(myRecipes);
   return (
     <>
       <Container>
         <h1> Hola </h1>
         <Row>
-          {recipes &&
-            recipes.map((recipe) => (
+          {myRecipes &&
+            myRecipes.map((recipe) => (
               <Recipe
                 title={recipe.title}
                 category={recipe.category}
@@ -28,6 +35,4 @@ const Home = ({ recipes }) => {
       </Container>
     </>
   );
-};
-
-export default Home;
+}

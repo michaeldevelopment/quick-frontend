@@ -7,6 +7,16 @@ $border-button-color: #ea523d;
 $font-titles: "Poppins", sans-serif;
 $text: "Open Sans", sans-serif;
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-titles;
+  font-weight: 500;
+}
+
 .user-form,
 .user-form[type="value"] {
   font-family: $font-titles;
