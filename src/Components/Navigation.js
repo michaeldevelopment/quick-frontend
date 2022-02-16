@@ -18,15 +18,15 @@ export default function Navigation({ children }) {
       <Navbar collapseOnSelect expand="lg" bg="white" variant="dark">
         <div className="navbar mx-auto">
           <Container>
-            <Navbar.Brand href="#home">
+            <Navbar.Brand as={Link} to="/">
               <Image src={quickLogo} alt="quick-logo" />
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav.Link>
+              <Nav.Link as={Link} to="/">
                 <li> Inicio </li>
               </Nav.Link>
-              <Nav.Link>
+              <Nav.Link as={Link} to={`/myrecipes/${user?.id}`}>
                 <li> Mis Recetas </li>
               </Nav.Link>
               <Nav.Link as={Link} to="/myfavs">
@@ -58,7 +58,11 @@ export default function Navigation({ children }) {
                     </Dropdown.Menu>
                   </Dropdown>
 
-                  <Button className="navbar-button mx-3" as={Link} to="/">
+                  <Button
+                    className="navbar-button mx-3"
+                    as={Link}
+                    to="/createrecipe"
+                  >
                     Crear Receta
                   </Button>
                 </>

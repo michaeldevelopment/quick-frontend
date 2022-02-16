@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../Context/useAuth";
 
-export default function PrivateRoute({ children }) {
+export default function RedirectUser({ children }) {
   const auth = useAuth();
   const { user } = auth;
-  return user?.username ? children : <Navigate to="/" />;
+  return user?.username ? <Navigate to="/" /> : children;
 }
