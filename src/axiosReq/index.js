@@ -11,6 +11,14 @@ const loginReq = (obj) => {
   return axios.post(`${url}/users/login`, obj);
 };
 
+const getUserDataReq = (userId) => {
+  return axios.get(`${url}/users/${userId}`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+};
+
 const getRecipesReq = () => {
   return axios.get(`${url}/recipes`);
 };
@@ -35,10 +43,33 @@ const addToFavReq = (recipeId) => {
   );
 };
 
+const deleteRecipeReq = (recipeId) => {
+  return axios.delete(`${url}/recipes/${recipeId}`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+};
+
+const deleteFavReq = (recipeId) => {
+  return axios.put(
+    `${url}/users/${recipeId}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    }
+  );
+};
+
 export default {
   signUpReq,
   loginReq,
   getRecipesReq,
   createRecipeReq,
   addToFavReq,
+  getUserDataReq,
+  deleteRecipeReq,
+  deleteFavReq,
 };

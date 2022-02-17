@@ -26,10 +26,10 @@ export default function Navigation({ children }) {
               <Nav.Link as={Link} to="/">
                 <li> Inicio </li>
               </Nav.Link>
-              <Nav.Link as={Link} to={`/myrecipes/${user?.id}`}>
+              <Nav.Link>
                 <li> Mis Recetas </li>
               </Nav.Link>
-              <Nav.Link as={Link} to="/myfavs">
+              <Nav.Link>
                 <li> Mis Planes </li>
               </Nav.Link>
               <Nav.Link>
@@ -40,14 +40,19 @@ export default function Navigation({ children }) {
                   <Dropdown>
                     <Dropdown.Toggle
                       id="dropdown-basic"
+                      variant="danger"
                       className="nav-dropdown border-0"
                     >
                       {user?.username}
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item>My Favs</Dropdown.Item>
-                      <Dropdown.Item>My Recipes</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={`/myfavs/${user?.id}`}>
+                        My Favs
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to={`/myrecipes/${user?.id}`}>
+                        My Recipes
+                      </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item
                         onClick={() => logoutUser()}
@@ -60,6 +65,7 @@ export default function Navigation({ children }) {
 
                   <Button
                     className="navbar-button mx-3"
+                    variant="danger"
                     as={Link}
                     to="/createrecipe"
                   >
@@ -68,11 +74,21 @@ export default function Navigation({ children }) {
                 </>
               ) : (
                 <>
-                  <Button className="navbar-button mx-3" as={Link} to="/login">
+                  <Button
+                    className="navbar-button mx-3"
+                    vairant="danger"
+                    as={Link}
+                    to="/login"
+                  >
                     Login
                   </Button>
 
-                  <Button className="navbar-button mx-3" as={Link} to="/signup">
+                  <Button
+                    className="navbar-button mx-3"
+                    vairant="danger"
+                    as={Link}
+                    to="/signup"
+                  >
                     Sign Up
                   </Button>
                 </>

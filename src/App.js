@@ -60,14 +60,19 @@ function App() {
             <Route
               path="/myrecipes/:id"
               element={
-                recipes && (
-                  <PrivateRoute>
-                    <MyRecipes recipes={recipes} />
-                  </PrivateRoute>
-                )
+                <PrivateRoute>
+                  <MyRecipes />
+                </PrivateRoute>
               }
             />
-            <Route path="/myfavs/:id" element={<MyFavs />} />
+            <Route
+              path="/myfavs/:id"
+              element={
+                <PrivateRoute>
+                  <MyFavs />
+                </PrivateRoute>
+              }
+            />
             <Route path="/passwordreset/:id" element={<PasswordReset />} />
             <Route path="/passwordchanged/:id" element={<PasswordChanged />} />
             <Route
