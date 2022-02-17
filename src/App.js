@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./Context/auth";
@@ -7,7 +7,6 @@ import req from "./axiosReq/index";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
-import MyFavs from "./Pages/MyFavs";
 import EmailRecovery from "./Pages/EmailRecovery";
 import PasswordReset from "./Pages/PasswordReset";
 import PasswordChanged from "./Pages/PasswordChanged";
@@ -15,9 +14,13 @@ import CreateRecipe from "./Pages/CreateRecipe";
 import PrivateRoute from "./Pages/PrivateRoute";
 import RedirectUser from "./Pages/RedirectUser";
 import RecipeCreated from "./Pages/RecipeCreated";
-import MyRecipes from "./Pages/MyRecipes";
 
 import Navigation from "./Components/Navigation";
+
+import Spinner from "react-bootstrap/Spinner";
+
+const MyRecipes = React.lazy(() => import("./Pages/MyRecipes"));
+const MyFavs = React.lazy(() => import("./Pages/MyFavs"));
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -61,7 +64,17 @@ function App() {
               path="/myrecipes/:id"
               element={
                 <PrivateRoute>
-                  <MyRecipes />
+                  <Suspense
+                    fallback={
+                      <Spinner
+                        animation="border"
+                        variant="secondary"
+                        className="mx-5"
+                      />
+                    }
+                  >
+                    <MyRecipes />
+                  </Suspense>
                 </PrivateRoute>
               }
             />
@@ -69,7 +82,17 @@ function App() {
               path="/myfavs/:id"
               element={
                 <PrivateRoute>
-                  <MyFavs />
+                  <Suspense
+                    fallback={
+                      <Spinner
+                        animation="border"
+                        variant="secondary"
+                        className="mx-5"
+                      />
+                    }
+                  >
+                    <MyFavs />
+                  </Suspense>
                 </PrivateRoute>
               }
             />

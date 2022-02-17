@@ -22,3 +22,9 @@ h6 {
   font-family: $font-titles;
   font-weight: 500;
 }
+
+.recipe-form,
+.recipe-form[type="value"] {
+  font-family: $font-titles;
+  font-weight: 100;
+}
