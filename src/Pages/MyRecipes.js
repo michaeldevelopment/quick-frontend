@@ -1,36 +1,51 @@
 import React, { useEffect, useState } from "react";
+import Recipe from "../Components/Recipe";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { useParams } from "react-router-dom";
-import Recipe from "../Components/Recipe";
 
-export default function MyRecipes({ recipes }) {
+import req from "../axiosReq/index";
+import "./pages.scss";
+import { useAuth } from "../Context/useAuth";
+
+export default function MyRecipes() {
   const [myRecipes, setMyRecipes] = useState([]);
+  const auth = useAuth();
   const { id } = useParams();
+  const { user } = auth;
 
-  const findRecipe = recipes.find((recipe) => recipe.user.id === id);
-  useEffect(() => setMyRecipes([...myRecipes, findRecipe]), []);
+  useEffect(
+    () =>
+      req
+        .getUserDataReq(id)
+        .then(({ data }) => setMyRecipes(...myRecipes, data.recipes)),
+    []
+  );
 
-  console.log(myRecipes);
   return (
     <>
       <Container>
-        <h1> Hola </h1>
+        <h1> Mis recetas </h1>
         <Row>
-          {myRecipes &&
+          {myRecipes.length ? (
             myRecipes.map((recipe) => (
               <Recipe
                 title={recipe.title}
+                username={user?.username}
                 category={recipe.category}
                 food_hour={recipe.food_hour}
                 ingredients={recipe.ingredients}
                 description={recipe.description}
-                id={recipe.id}
+                idRecipe={recipe.id}
                 date={recipe.createdAt}
                 key={recipe.id}
+                textPage="mis recetas"
               />
-            ))}
+            ))
+          ) : (
+            <p> No has creado ninguna receta</p>
+          )}
         </Row>
       </Container>
     </>

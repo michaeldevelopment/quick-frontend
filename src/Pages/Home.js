@@ -9,17 +9,18 @@ const Home = ({ recipes }) => {
   return (
     <>
       <Container>
-        <h1> Hola </h1>
+        <h1> Recetas </h1>
         <Row>
           {recipes &&
             recipes.map((recipe) => (
               <Recipe
                 title={recipe.title}
+                username={recipe.user.username}
                 category={recipe.category}
                 food_hour={recipe.food_hour}
                 ingredients={recipe.ingredients}
                 description={recipe.description}
-                id={recipe.id}
+                idRecipe={recipe.id}
                 date={recipe.createdAt}
                 key={recipe.id}
               />
