@@ -6,6 +6,8 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import Spinner from "react-bootstrap/Spinner";
+
 import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 
@@ -14,6 +16,8 @@ import { es } from "date-fns/locale";
 
 import req from "../axiosReq/index";
 import "./components.scss";
+
+import { useAuth } from "../Context/useAuth";
 
 const Recipe = ({
   title,
@@ -28,8 +32,11 @@ const Recipe = ({
 }) => {
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const [alert, setAlert] = useState({});
+  const auth = useAuth();
   const { id } = useParams();
+  const { user } = auth;
 
   const addToFav = (e) => {
     e.preventDefault();
@@ -37,6 +44,7 @@ const Recipe = ({
       data.error
         ? setAlert({ ...data, show: true, variant: "danger" })
         : setAlert({ ...data, show: true, variant: "success" });
+      setShowSpinner(true);
     });
   };
 
@@ -47,12 +55,14 @@ const Recipe = ({
         data.error
           ? setAlert({ ...data, show: true, variant: "danger" })
           : setAlert({ ...data, show: true, variant: "success" });
+        setShowSpinner(true);
       });
     } else {
       req.deleteFavReq(idRecipe).then(({ data }) => {
         data.error
           ? setAlert({ ...data, show: true, variant: "danger" })
           : setAlert({ ...data, show: true, variant: "success" });
+        setShowSpinner(true);
       });
     }
   };
@@ -62,7 +72,7 @@ const Recipe = ({
       <Col key={idRecipe} lg={3} md={6} xs={12}>
         <Card className="recipeCard my-3">
           <Card.Img variant="top" src="holder.js/100px160" />
-          <Card.Header>
+          <Card.Header className="cardHeader">
             <h5>{title}</h5>
           </Card.Header>
           <Card.Body>
@@ -85,11 +95,11 @@ const Recipe = ({
             </small>
           </Card.Footer>
           {id ? (
-            <Button variant="danger" onClick={() => setShowDelete(true)}>
+            <Button variant="success" onClick={() => setShowDelete(true)}>
               Eliminar de {textPage}
             </Button>
           ) : (
-            <Button variant="primary" onClick={() => setShow(true)}>
+            <Button variant="danger" onClick={() => setShow(true)}>
               Ver más
             </Button>
           )}
@@ -107,31 +117,37 @@ const Recipe = ({
         {alert.show && (
           <Alert
             variant={alert.variant}
-            onClose={() => setAlert({ ...alert, show: false })}
+            onClose={() => {
+              setAlert({ ...alert, show: false });
+              setShowSpinner(false);
+            }}
             dismissible
           >
-            <p>{alert.message}</p>
+            <h6>{alert.message}</h6>
           </Alert>
         )}
         <Modal.Header closeButton>
           <Modal.Title>{title} </Modal.Title>
-          <OverlayTrigger
-            placement="right"
-            overlay={<Tooltip>Agregar a favoritos</Tooltip>}
-          >
-            <Button
-              className="mx-3"
-              size="sm"
-              variant="light"
-              onClick={addToFav}
+          {user?.username && (
+            <OverlayTrigger
+              placement="right"
+              overlay={<Tooltip>Agregar a favoritos</Tooltip>}
             >
-              <FaStar className="text-warning" />
-            </Button>
-          </OverlayTrigger>
+              <Button
+                className="mx-3"
+                size="sm"
+                variant="light"
+                onClick={addToFav}
+              >
+                <FaStar className="text-warning" />
+              </Button>
+            </OverlayTrigger>
+          )}
+          {showSpinner && <Spinner animation="border" variant="danger" />}
         </Modal.Header>
         <Modal.Body>
           <p> {ingredients} </p>
-          <p>{description}</p>
+          <p> {description} </p>
         </Modal.Body>
       </Modal>
 
@@ -146,17 +162,24 @@ const Recipe = ({
         {alert.show && (
           <Alert
             variant={alert.variant}
-            onClose={() => setAlert({ ...alert, show: false })}
+            onClose={() => {
+              setAlert({ ...alert, show: false });
+              setShowSpinner(false);
+            }}
             dismissible
           >
-            <p>{alert.message}</p>
+            <h6>{alert.message}</h6>
           </Alert>
         )}
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title> ¿Estás seguro? </Modal.Title>
+          {showSpinner && <Spinner animation="border" variant="danger" />}
         </Modal.Header>
         <Modal.Body>
-          <p> ¿Estás seguro de querer eliminar ésta receta de {textPage}? </p>
+          <p>
+            ¿Estás seguro de querer eliminar ésta receta de
+            <strong> {textPage}? </strong>
+          </p>
 
           <Button size="md" variant="danger" onClick={handleDelete}>
             Si

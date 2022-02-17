@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Recipe from "../Components/Recipe";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Spinner from "react-bootstrap/Spinner";
+
+import Recipe from "../Components/Recipe";
+
 import { useParams } from "react-router-dom";
 
 import req from "../axiosReq/index";
@@ -26,7 +29,7 @@ export default function MyRecipes() {
   return (
     <>
       <Container>
-        <h1> Mis recetas </h1>
+        <h3> Mis recetas </h3>
         <Row>
           {myRecipes.length ? (
             myRecipes.map((recipe) => (

@@ -76,7 +76,7 @@ export default function Navigation({ children }) {
                 <>
                   <Button
                     className="navbar-button mx-3"
-                    vairant="danger"
+                    variant="danger"
                     as={Link}
                     to="/login"
                   >
@@ -85,7 +85,7 @@ export default function Navigation({ children }) {
 
                   <Button
                     className="navbar-button mx-3"
-                    vairant="danger"
+                    variant="danger"
                     as={Link}
                     to="/signup"
                   >

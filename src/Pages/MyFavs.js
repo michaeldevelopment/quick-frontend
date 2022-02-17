@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Recipe from "../Components/Recipe";
+import SkeletonRecipe from "../Components/SkeletonRecipe";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";

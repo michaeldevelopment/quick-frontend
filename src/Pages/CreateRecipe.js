@@ -8,8 +8,10 @@ import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
+
 import quickIcon from "../Images/small-icon.png";
 import req from "../axiosReq/index";
+import "./pages.scss";
 
 export default function CreateRecipe() {
   const [handleInputs, setHandleInputs] = useState([]);
@@ -72,7 +74,7 @@ export default function CreateRecipe() {
           </h3>
         </Col>
 
-        <Col className="border border-left border-warning p-3">
+        <Col className="p-3">
           <Form className="recipe-form" noValidate onSubmit={handleSubmit}>
             <Form.Group>
               <Row>
@@ -80,6 +82,7 @@ export default function CreateRecipe() {
                   <FloatingLabel
                     controlId="floatingInput1"
                     label="Título de la receta"
+                    className="text-muted"
                   >
                     <Form.Control
                       type="text"
@@ -96,7 +99,7 @@ export default function CreateRecipe() {
                       onChange={handleChange}
                       name="category"
                     >
-                      <option>Selecciona una opcion: </option>
+                      <option value="opt">Selecciona una opción</option>
                       <option value="pollo">Pollo</option>
                       <option value="aves">Ave</option>
                       <option value="carne">Carne</option>
@@ -105,8 +108,9 @@ export default function CreateRecipe() {
                       <option value="salsa">Salsa</option>
                       <option value="huevos">Huevos</option>
                       <option value="arroces">Arroz</option>
+                      <option value="pastas">Pastas</option>
                       <option value="sopas">Sopa</option>
-                      <option value="corriente">Sopa</option>
+                      <option value="corriente">Corriente</option>
                     </Form.Select>
                   </FloatingLabel>
                 </Col>
@@ -120,7 +124,7 @@ export default function CreateRecipe() {
                       onChange={handleChange}
                       name="food_hour"
                     >
-                      <option>Selecciona una opcion: </option>
+                      <option value="opt">Selecciona una opción</option>
                       <option value="desayuno">Desayuno</option>
                       <option value="almuerzo">Almuerzo</option>
                       <option value="cena">Cena</option>
@@ -129,13 +133,11 @@ export default function CreateRecipe() {
                 </Col>
               </Row>
 
-              {/* {handleInputs.quantity} */}
-
               <Form.Group>
                 <FloatingLabel
                   controlId="floatingTextarea2"
                   label="Ingredientes"
-                  className="my-4"
+                  className="my-4 text-muted"
                 >
                   <Form.Control
                     as="textarea"
@@ -144,14 +146,18 @@ export default function CreateRecipe() {
                     name="ingredients"
                   />
                 </FloatingLabel>
+              </Form.Group>
 
+              <Form.Group>
                 <FloatingLabel
                   controlId="floatingTextarea2"
                   label="Preparación"
+                  className="text-muted"
                 >
                   <Form.Control
                     className="my-4"
                     as="textarea"
+                    rows={8}
                     placeholder="Escribe aquí la preparación detallada de ésta receta"
                     onChange={handleChange}
                     name="description"
@@ -162,7 +168,7 @@ export default function CreateRecipe() {
 
             <p> Imagen </p>
 
-            <Button variant="primary" type="submit">
+            <Button variant="danger" type="submit">
               Crear Receta
             </Button>
           </Form>
