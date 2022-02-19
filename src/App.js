@@ -14,6 +14,7 @@ import CreateRecipe from "./Pages/CreateRecipe";
 import PrivateRoute from "./Pages/PrivateRoute";
 import RedirectUser from "./Pages/RedirectUser";
 import RecipeCreated from "./Pages/RecipeCreated";
+import Plans from "./Pages/Plans";
 
 import Navigation from "./Components/Navigation";
 
@@ -106,6 +107,7 @@ function App() {
                 </PrivateRoute>
               }
             />
+            <Route path="/plans" element={<Plans />} />
           </Routes>
         </Navigation>
       </AuthProvider>
