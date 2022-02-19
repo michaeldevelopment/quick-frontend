@@ -26,11 +26,8 @@ export default function Navigation({ children }) {
               <Nav.Link as={Link} to="/">
                 <li> Inicio </li>
               </Nav.Link>
-              <Nav.Link>
-                <li> Mis Recetas </li>
-              </Nav.Link>
-              <Nav.Link>
-                <li> Mis Planes </li>
+              <Nav.Link as={Link} to="/plans">
+                <li> Planes </li>
               </Nav.Link>
               <Nav.Link>
                 <li> Acerca de </li>

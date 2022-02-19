@@ -1,39 +1,38 @@
 import { getToken } from "../Session/dataUser";
 import axios from "axios";
+import config from "../config";
 
-const url = "http://localhost:3003/api/v1";
-
-const signUpReq = (obj) => {
-  return axios.post(`${url}/users/signup`, obj);
+const signUpReq = async (obj) => {
+  return await axios.post(`${config.apiUrl}/users/signup`, obj);
 };
 
-const loginReq = (obj) => {
-  return axios.post(`${url}/users/login`, obj);
+const loginReq = async (obj) => {
+  return await axios.post(`${config.apiUrl}/users/login`, obj);
 };
 
-const getUserDataReq = (userId) => {
-  return axios.get(`${url}/users/${userId}`, {
+const getUserDataReq = async (userId) => {
+  return await axios.get(`${config.apiUrl}/users/${userId}`, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
   });
 };
 
-const getRecipesReq = () => {
-  return axios.get(`${url}/recipes`);
+const getRecipesReq = async () => {
+  return await axios.get(`${config.apiUrl}/recipes`);
 };
 
-const createRecipeReq = (obj) => {
-  return axios.post(`${url}/recipes/createrecipe`, obj, {
+const createRecipeReq = async (obj) => {
+  return await axios.post(`${config.apiUrl}/recipes/createrecipe`, obj, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
   });
 };
 
-const addToFavReq = (recipeId) => {
-  return axios.put(
-    `${url}/recipes`,
+const addToFavReq = async (recipeId) => {
+  return await axios.put(
+    `${config.apiUrl}/recipes`,
     { recipeId },
     {
       headers: {
@@ -43,17 +42,17 @@ const addToFavReq = (recipeId) => {
   );
 };
 
-const deleteRecipeReq = (recipeId) => {
-  return axios.delete(`${url}/recipes/${recipeId}`, {
+const deleteRecipeReq = async (recipeId) => {
+  return await axios.delete(`${config.apiUrl}/recipes/${recipeId}`, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
   });
 };
 
-const deleteFavReq = (recipeId) => {
-  return axios.put(
-    `${url}/users/${recipeId}`,
+const deleteFavReq = async (recipeId) => {
+  return await axios.put(
+    `${config.apiUrl}/users/${recipeId}`,
     {},
     {
       headers: {
@@ -61,6 +60,14 @@ const deleteFavReq = (recipeId) => {
       },
     }
   );
+};
+
+const stripeReq = async (obj) => {
+  return await axios.post(`${config.apiUrl}/payments`, obj, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
 };
 
 export default {
@@ -72,4 +79,5 @@ export default {
   getUserDataReq,
   deleteRecipeReq,
   deleteFavReq,
+  stripeReq,
 };
