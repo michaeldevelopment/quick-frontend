@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import Spinner from "react-bootstrap/Spinner";
 import Badge from "react-bootstrap/Badge";
-
 import { FaStar } from "react-icons/fa";
 import { ImBlocked } from "react-icons/im";
 
@@ -32,6 +33,7 @@ const Recipe = ({
   date,
   premium,
   idRecipe,
+  img,
   textPage,
 }) => {
   const [show, setShow] = useState(false);
@@ -73,9 +75,13 @@ const Recipe = ({
 
   return (
     <>
-      <Col key={idRecipe} lg={3} md={6} xs={12}>
+      <Col key={idRecipe} lg={4} md={6} xs={12}>
         <Card className="recipeCard my-3">
-          <Card.Img variant="top" src="holder.js/100px160" />
+          <Card.Img
+            variant="top"
+            src={img}
+            className="imgRecipe mx-auto rounded img-thumbnail"
+          />
           <Card.Header className="cardHeader">
             <h5>{title}</h5>
             {premium ? (
@@ -94,9 +100,7 @@ const Recipe = ({
           </Card.Body>
           <Card.Footer>
             <small className="text-muted">
-              Creado por {username}
-              <br />
-              Hace {""}
+              Creado por {username} - Hace {""}
               {date
                 ? formatDistance(new Date(), new Date(date), {
                     locale: es,
@@ -160,7 +164,17 @@ const Recipe = ({
           {showSpinner && <Spinner animation="border" variant="danger" />}
         </Modal.Header>
         <Modal.Body>
-          <p> {ingredients} </p>
+          <Row>
+            <Col>
+              <Image src={img} alt="Img" className="rounded img-thumbnail" />
+            </Col>
+            <Col>
+              <h5> Ingredientes: </h5>
+              <p> {ingredients} </p>
+            </Col>
+          </Row>
+          <hr />
+          <h5> Descripcion: </h5>
           <p> {description} </p>
         </Modal.Body>
       </Modal>

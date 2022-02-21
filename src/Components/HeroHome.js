@@ -21,7 +21,7 @@ export default function HeroHome() {
           </p>
           <a href="#about">
             <Button variant="danger" className="homeButton" size="lg">
-              ¡Regístrate ahora!
+              ¡Acerca de nosotros!
             </Button>
           </a>
         </Col>

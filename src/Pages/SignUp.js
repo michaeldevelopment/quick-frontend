@@ -6,8 +6,6 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Alert from "react-bootstrap/Alert";
-// import Row from "react-bootstrap/Row";
-// import Col from "react-bootstrap/Col";
 import req from "../axiosReq/index";
 import { useAuth } from "../Context/useAuth";
 import { setUser, setToken } from "../Session/dataUser";
@@ -142,11 +140,7 @@ export default function SignUp() {
             onChange={handleChange}
           />
         </Form.Group>
-
-        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group> */}
-        <Button variant="primary" type="submit">
+        <Button variant="danger" type="submit">
           Enviar
         </Button>
       </Form>

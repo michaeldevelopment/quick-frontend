@@ -30,7 +30,6 @@ export default function ModalPayment({ show, setShow }) {
   const [alert, setAlert] = useState({});
   const [handleInputs, setHandleInputs] = useState([]);
   const auth = useAuth();
-  const { user } = auth;
 
   const navigate = useNavigate();
 
@@ -43,7 +42,6 @@ export default function ModalPayment({ show, setShow }) {
     e.preventDefault();
 
     const { cardNumber, CVC, expDate, docType, docNumber } = handleInputs;
-    console.log(cardNumber, CVC, expDate, docType, docNumber);
 
     const dataPayment = {
       cardNumber: cardNumber,
@@ -76,7 +74,6 @@ export default function ModalPayment({ show, setShow }) {
         );
       } else {
         setAlert({ show: true, error: data.message });
-        console.log(data.error);
       }
     });
   };
@@ -219,7 +216,6 @@ export default function ModalPayment({ show, setShow }) {
                     animation="border"
                     className="spinner-border-sm"
                     variant="white"
-                    disabled={showSpinner ? true : false}
                   />
                 )}
               </Button>

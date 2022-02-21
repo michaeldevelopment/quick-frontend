@@ -42,6 +42,8 @@ export default function MyFavs() {
                 description={recipe.description}
                 idRecipe={recipe.id}
                 date={recipe.createdAt}
+                premium={recipe.premium}
+                img={recipe.photos}
                 key={recipe.id}
                 textPage="mis favoritos"
               />

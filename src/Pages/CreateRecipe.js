@@ -5,9 +5,12 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 import Form from "react-bootstrap/Form";
+import Spinner from "react-bootstrap/Spinner";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
+
+import axios from "axios";
 
 import { useAuth } from "../Context/useAuth";
 
@@ -17,8 +20,10 @@ import "./pages.scss";
 
 export default function CreateRecipe() {
   const [handleInputs, setHandleInputs] = useState([]);
+  const [showSpinner, setShowSpinner] = useState(false);
   const [alert, setAlert] = useState({});
   const [check, setCheck] = useState();
+  const [isUploaded, setIsUploaded] = useState(false);
   const navigate = useNavigate();
   const auth = useAuth();
   const { user } = auth;
@@ -31,10 +36,38 @@ export default function CreateRecipe() {
     setHandleInputs({ ...handleInputs, [target.name]: target.value });
   };
 
+  const handlePhotoChange = ({ target }) => {
+    setIsUploaded(true);
+    setShowSpinner(true);
+    const formData = new FormData();
+    let files = target.files;
+    for (let i = 0; i < files.length; i++) {
+      let file = files[i];
+      formData.append("file", file);
+      formData.append("upload_preset", "huktx7ua");
+      axios
+        .post(
+          "https://api.cloudinary.com/v1_1/dmtvdqzof/image/upload",
+          formData
+        )
+        .then((response) => {
+          setHandleInputs({
+            ...handleInputs,
+            [target.name]: response.data.url,
+          });
+          setIsUploaded(false);
+          setShowSpinner(false);
+        })
+        .catch((error) => {
+          setAlert({ value: true, message: error.message, type: "danger" });
+        });
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { title, category, food_hour, ingredients, description } =
+    const { title, category, food_hour, ingredients, description, photos } =
       handleInputs;
 
     const recipe = {
@@ -43,6 +76,7 @@ export default function CreateRecipe() {
       food_hour,
       ingredients,
       description,
+      photos,
       premium: check === "on" ? true : false,
     };
 
@@ -190,10 +224,26 @@ export default function CreateRecipe() {
               </Form.Group>
             )}
 
-            <p> Imagen </p>
+            <Form.Group controlId="formFileMultiple" className="mb-3">
+              <input
+                type="file"
+                name="photos"
+                accept=".jpg,.jpeg,.gif,.png"
+                onChange={handlePhotoChange}
+                multiple
+                data-test-id="photos-post-form"
+              />
+            </Form.Group>
 
-            <Button variant="danger" type="submit">
+            <Button variant="danger" type="submit" disabled={isUploaded}>
               Crear Receta
+              {showSpinner && (
+                <Spinner
+                  animation="border"
+                  className="spinner-border-sm"
+                  variant="white"
+                />
+              )}
             </Button>
           </Form>
         </Col>

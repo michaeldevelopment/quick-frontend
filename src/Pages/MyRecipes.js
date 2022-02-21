@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Spinner from "react-bootstrap/Spinner";
 
 import Recipe from "../Components/Recipe";
 
@@ -42,6 +41,8 @@ export default function MyRecipes() {
                 description={recipe.description}
                 idRecipe={recipe.id}
                 date={recipe.createdAt}
+                premium={recipe.premium}
+                img={recipe.photos}
                 key={recipe.id}
                 textPage="mis recetas"
               />
