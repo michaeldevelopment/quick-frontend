@@ -3,14 +3,17 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { BsCheckLg, BsXLg } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Context/useAuth";
 
 import "./components.scss";
 
-import StripeContainer from "./StripeContainer";
+import ModalPayment from "./ModalPayment";
 
 const CardPricing = ({ text }) => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
+  const auth = useAuth();
+  const { user } = auth;
 
   const handleModal = () => {
     if (text === "free") {
@@ -19,6 +22,11 @@ const CardPricing = ({ text }) => {
       setShow(true);
     }
   };
+
+  const redirectLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <>
       <Card style={{ width: "25rem" }} className="mx-auto my-3 cardPricing">
@@ -85,12 +93,12 @@ const CardPricing = ({ text }) => {
           variant={text === "free" ? "dark" : "danger"}
           size="lg"
           className="buttonPricing"
-          onClick={handleModal}
+          onClick={user?.username ? handleModal : redirectLogin}
         >
           {text === "free" ? "Registrarme gratis" : "Obtener membresía"}
         </Button>
       </Card>
-      <StripeContainer show={show} setShow={setShow} />
+      <ModalPayment show={show} setShow={setShow} />
     </>
   );
 };

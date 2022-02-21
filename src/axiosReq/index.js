@@ -62,8 +62,8 @@ const deleteFavReq = async (recipeId) => {
   );
 };
 
-const stripeReq = async (obj) => {
-  return await axios.post(`${config.apiUrl}/payments`, obj, {
+const makePaymentReq = async (obj) => {
+  return await axios.post(`${config.apiUrl}/payments/makepayment`, obj, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
@@ -79,5 +79,5 @@ export default {
   getUserDataReq,
   deleteRecipeReq,
   deleteFavReq,
-  stripeReq,
+  makePaymentReq,
 };

@@ -14,6 +14,7 @@ import CreateRecipe from "./Pages/CreateRecipe";
 import PrivateRoute from "./Pages/PrivateRoute";
 import RedirectUser from "./Pages/RedirectUser";
 import RecipeCreated from "./Pages/RecipeCreated";
+import ShowAllRecipes from "./Pages/ShowAllRecipes";
 import Plans from "./Pages/Plans";
 
 import Navigation from "./Components/Navigation";
@@ -36,6 +37,10 @@ function App() {
         <Navigation>
           <Routes>
             <Route path="/" element={recipes && <Home recipes={recipes} />} />
+            <Route
+              path="/allrecipes"
+              element={recipes && <ShowAllRecipes recipes={recipes} />}
+            />
             <Route
               path="/login"
               element={
