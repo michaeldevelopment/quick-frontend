@@ -36,6 +36,7 @@ export default function AllRecipes({ recipes }) {
                       description={recipe.description}
                       premium={recipe.premium}
                       idRecipe={recipe.id}
+                      img={recipe.photos}
                       date={recipe.createdAt}
                       key={recipe.id}
                     />
@@ -72,6 +73,7 @@ export default function AllRecipes({ recipes }) {
                       description={recipe.description}
                       idRecipe={recipe.id}
                       premium={recipe.premium}
+                      img={recipe.photos}
                       date={recipe.createdAt}
                       key={recipe.id}
                     />

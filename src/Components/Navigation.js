@@ -103,7 +103,6 @@ export default function Navigation({ children }) {
           </div>
         </Navbar>
       </div>
-
       {children}
     </>
   );
