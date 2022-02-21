@@ -6,12 +6,17 @@ export const UserContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(getUser());
 
-  const loginUser = (username, email, id) => {
+  const loginUser = (username, email, id, premium) => {
     setUser({
       username,
       email,
       id,
+      premium,
     });
+  };
+
+  const setPremiumUser = (premium) => {
+    setUser({ ...user, premium });
   };
 
   const logoutUser = useCallback(() => {
@@ -24,8 +29,9 @@ export const AuthProvider = ({ children }) => {
       user,
       loginUser,
       logoutUser,
+      setPremiumUser,
     }),
-    [user, loginUser, logoutUser]
+    [user, loginUser, logoutUser, setPremiumUser]
   );
 
   return (

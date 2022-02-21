@@ -14,7 +14,7 @@ export default function RecipeCreated() {
         </h2>
         <h3>¡La receta ha sido creada ha sido creada satisfactoriamente!</h3>
         <p> Gracias por compartir tu experticie. </p>
-        <Button variant="primary" onClick={() => navigate("/")} size="lg">
+        <Button variant="danger" onClick={() => navigate("/")} size="lg">
           Ir al Home
         </Button>
       </Container>

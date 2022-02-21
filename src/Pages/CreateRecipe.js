@@ -9,6 +9,8 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 
+import { useAuth } from "../Context/useAuth";
+
 import quickIcon from "../Images/small-icon.png";
 import req from "../axiosReq/index";
 import "./pages.scss";
@@ -16,7 +18,14 @@ import "./pages.scss";
 export default function CreateRecipe() {
   const [handleInputs, setHandleInputs] = useState([]);
   const [alert, setAlert] = useState({});
+  const [check, setCheck] = useState();
   const navigate = useNavigate();
+  const auth = useAuth();
+  const { user } = auth;
+
+  const handleCheckbox = (e) => {
+    setCheck(e.target.value);
+  };
 
   const handleChange = ({ target }) => {
     setHandleInputs({ ...handleInputs, [target.name]: target.value });
@@ -34,6 +43,7 @@ export default function CreateRecipe() {
       food_hour,
       ingredients,
       description,
+      premium: check === "on" ? true : false,
     };
 
     req.createRecipeReq(recipe).then(({ data }) => {
@@ -165,6 +175,20 @@ export default function CreateRecipe() {
                 </FloatingLabel>
               </Form.Group>
             </Form.Group>
+
+            {user?.premium && (
+              <Form.Group
+                className="mb-3 d-flex justify-content-center"
+                id="formGridCheckbox"
+              >
+                <Form.Check
+                  type="checkbox"
+                  label="Receta Premium"
+                  onChange={handleCheckbox}
+                  check={check}
+                />
+              </Form.Group>
+            )}
 
             <p> Imagen </p>
 

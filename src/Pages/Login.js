@@ -43,8 +43,8 @@ export default function Login() {
           message: "El usuario se ha logueado correctamente",
           variant: "success",
         });
-        auth.loginUser(data.username, data.email, data.id);
-        setUser(data.username, data.email, data.id);
+        auth.loginUser(data.username, data.email, data.id, data.premium);
+        setUser(data.username, data.email, data.id, data.premium);
         setToken(data.token);
       }
     });

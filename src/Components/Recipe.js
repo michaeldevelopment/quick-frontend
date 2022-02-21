@@ -7,8 +7,11 @@ import Alert from "react-bootstrap/Alert";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import Spinner from "react-bootstrap/Spinner";
+import Badge from "react-bootstrap/Badge";
 
 import { FaStar } from "react-icons/fa";
+import { ImBlocked } from "react-icons/im";
+
 import { useParams } from "react-router-dom";
 
 import { formatDistance } from "date-fns";
@@ -27,6 +30,7 @@ const Recipe = ({
   ingredients,
   description,
   date,
+  premium,
   idRecipe,
   textPage,
 }) => {
@@ -74,6 +78,11 @@ const Recipe = ({
           <Card.Img variant="top" src="holder.js/100px160" />
           <Card.Header className="cardHeader">
             <h5>{title}</h5>
+            {premium ? (
+              <Badge bg="danger">Premium</Badge>
+            ) : (
+              <Badge bg="secondary">Free</Badge>
+            )}
           </Card.Header>
           <Card.Body>
             <Card.Title>{ingredients}</Card.Title>
@@ -86,21 +95,26 @@ const Recipe = ({
           <Card.Footer>
             <small className="text-muted">
               Creado por {username}
-              {/* Hace: 
+              <br />
+              Hace {""}
               {date
                 ? formatDistance(new Date(), new Date(date), {
                     locale: es,
                   })
-                : ""} */}
+                : ""}
             </small>
           </Card.Footer>
           {id ? (
             <Button variant="success" onClick={() => setShowDelete(true)}>
               Eliminar de {textPage}
             </Button>
-          ) : (
+          ) : !premium || user?.premium ? (
             <Button variant="danger" onClick={() => setShow(true)}>
               Ver más
+            </Button>
+          ) : (
+            <Button variant="danger" disabled={true}>
+              <ImBlocked className="text-white" /> Ver más
             </Button>
           )}
         </Card>

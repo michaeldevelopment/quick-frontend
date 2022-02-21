@@ -53,8 +53,8 @@ export default function SignUp() {
             message: "El usuario se ha creado",
             variant: "success",
           });
-          auth.loginUser(data.username, data.email, data.id);
-          setUser(data.username, data.email, data.id);
+          auth.loginUser(data.username, data.email, data.id, data.premium);
+          setUser(data.username, data.email, data.id, data.premium);
           setToken(data.token);
         }
       });
