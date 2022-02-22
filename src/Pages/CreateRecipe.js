@@ -94,6 +94,7 @@ export default function CreateRecipe() {
           variant: "success",
         });
 
+        auth.addRecipes(data.savedRecipe);
         navigate("/recipecreated");
       }
     });
