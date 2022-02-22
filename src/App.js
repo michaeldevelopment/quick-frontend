@@ -42,7 +42,13 @@ function App() {
           />
           <Route
             path="/allrecipes"
-            element={allRecipes && <ShowAllRecipes recipes={allRecipes} />}
+            element={
+              allRecipes && (
+                <PrivateRoute>
+                  <ShowAllRecipes recipes={allRecipes} />
+                </PrivateRoute>
+              )
+            }
           />
           <Route
             path="/login"
