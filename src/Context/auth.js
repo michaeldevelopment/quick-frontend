@@ -5,6 +5,7 @@ export const UserContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(getUser());
+  const [allRecipes, setAllRecipes] = useState();
 
   const loginUser = (username, email, id, premium) => {
     setUser({
@@ -19,6 +20,15 @@ export const AuthProvider = ({ children }) => {
     setUser({ ...user, premium });
   };
 
+  const addAllRecipes = (recipes) => {
+    setAllRecipes(recipes);
+  };
+
+  const addRecipes = (recipe) => {
+    const newAllRecipes = [...allRecipes, recipe];
+    setAllRecipes(newAllRecipes);
+  };
+
   const logoutUser = useCallback(() => {
     setUser(null);
     localStorage.clear();
@@ -26,12 +36,23 @@ export const AuthProvider = ({ children }) => {
 
   const contextValue = useMemo(
     () => ({
+      allRecipes,
       user,
       loginUser,
       logoutUser,
       setPremiumUser,
+      addRecipes,
+      addAllRecipes,
     }),
-    [user, loginUser, logoutUser, setPremiumUser]
+    [
+      allRecipes,
+      user,
+      loginUser,
+      logoutUser,
+      setPremiumUser,
+      addRecipes,
+      addAllRecipes,
+    ]
   );
 
   return (
