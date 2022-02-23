@@ -7,6 +7,10 @@ $border-button-color: #ea523d;
 $font-titles: "Poppins", sans-serif;
 $text: "Open Sans", sans-serif;
 
+button {
+  font-family: $font-titles;
+}
+
 body {
   background-color: #fdf7f6;
 }
