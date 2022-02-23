@@ -4,6 +4,9 @@ import Container from "react-bootstrap/Container";
 import { useNavigate } from "react-router-dom";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 
+import "./pages.scss";
+
+
 export default function RecipeCreated() {
   const navigate = useNavigate();
   return (

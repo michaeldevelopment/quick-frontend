@@ -16,6 +16,7 @@ import RedirectUser from "./Pages/RedirectUser";
 import RecipeCreated from "./Pages/RecipeCreated";
 import ShowAllRecipes from "./Pages/ShowAllRecipes";
 import Plans from "./Pages/Plans";
+import Page404 from "./Pages/Page404";
 
 import Navigation from "./Components/Navigation";
 
@@ -122,6 +123,7 @@ function App() {
             }
           />
           <Route path="/plans" element={<Plans />} />
+          <Route path="*" element={<Page404 />} />
         </Routes>
       </Navigation>
     </>
