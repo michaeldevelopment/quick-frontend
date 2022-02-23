@@ -134,6 +134,7 @@ export default function CreateRecipe() {
                       placeholder="Arroz con pollo"
                       onChange={handleChange}
                       name="title"
+                      data-test-id="title-recipe-form"
                     />
                   </FloatingLabel>
                 </Col>
@@ -143,6 +144,7 @@ export default function CreateRecipe() {
                       aria-label="Floating label select example"
                       onChange={handleChange}
                       name="category"
+                      data-test-id="category-select-form"
                     >
                       <option value="opt">Selecciona una opción</option>
                       <option value="pollo">Pollo</option>
@@ -168,6 +170,7 @@ export default function CreateRecipe() {
                       aria-label="Floating label select example"
                       onChange={handleChange}
                       name="food_hour"
+                      data-test-id="food-type-form"
                     >
                       <option value="opt">Selecciona una opción</option>
                       <option value="desayuno">Desayuno</option>
@@ -178,37 +181,35 @@ export default function CreateRecipe() {
                 </Col>
               </Row>
 
-              <Form.Group>
-                <FloatingLabel
-                  controlId="floatingTextarea2"
-                  label="Ingredientes"
-                  className="my-4 text-muted"
-                >
-                  <Form.Control
-                    as="textarea"
-                    placeholder="Escribe aquí los ingredientes de tu receta"
-                    onChange={handleChange}
-                    name="ingredients"
-                  />
-                </FloatingLabel>
-              </Form.Group>
+              <FloatingLabel
+                controlId="floatingTextarea2"
+                label="Ingredientes"
+                className="my-4 text-muted"
+              >
+                <Form.Control
+                  as="textarea"
+                  placeholder="Escribe aquí los ingredientes de tu receta"
+                  onChange={handleChange}
+                  name="ingredients"
+                  data-test-id="ingredients-recipe-form"
+                />
+              </FloatingLabel>
 
-              <Form.Group>
-                <FloatingLabel
-                  controlId="floatingTextarea2"
-                  label="Preparación"
-                  className="text-muted"
-                >
-                  <Form.Control
-                    className="my-4"
-                    as="textarea"
-                    rows={8}
-                    placeholder="Escribe aquí la preparación detallada de ésta receta"
-                    onChange={handleChange}
-                    name="description"
-                  />
-                </FloatingLabel>
-              </Form.Group>
+              <FloatingLabel
+                controlId="floatingTextarea2"
+                label="Preparación"
+                className="text-muted"
+              >
+                <Form.Control
+                  className="my-4"
+                  as="textarea"
+                  rows={8}
+                  placeholder="Escribe aquí la preparación detallada de ésta receta"
+                  onChange={handleChange}
+                  name="description"
+                  data-test-id="description-recipe-form"
+                />
+              </FloatingLabel>
             </Form.Group>
 
             {user?.premium && (
@@ -232,11 +233,16 @@ export default function CreateRecipe() {
                 accept=".jpg,.jpeg,.gif,.png"
                 onChange={handlePhotoChange}
                 multiple
-                data-test-id="photos-post-form"
+                data-test-id="photos-recipe-form"
               />
             </Form.Group>
 
-            <Button variant="danger" type="submit" disabled={isUploaded}>
+            <Button
+              variant="danger"
+              type="submit"
+              disabled={isUploaded}
+              id="button-create-recipe"
+            >
               Crear Receta
               {showSpinner && (
                 <Spinner
