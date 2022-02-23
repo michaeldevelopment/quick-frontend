@@ -67,37 +67,10 @@ Cypress.Commands.add("create_recipe", ({ title, ingredients, description }) => {
     .should("have.value", description);
 
   cy.get('[data-test-id="photos-recipe-form"]').attachFile(fixtureFile);
-  cy.pause();
+  cy.wait(2000);
 
   cy.get('[id="button-create-recipe"]').click();
 });
-
-Cypress.Commands.add(
-  "create_recipe_without_photo",
-  ({ title, ingredients, description }) => {
-    cy.get('[data-test-id="title-recipe-form"]')
-      .type(title)
-      .should("have.value", title);
-
-    cy.get('[data-test-id="category-select-form"]')
-      .select("Pollo")
-      .should("have.value", "pollo");
-
-    cy.get('[data-test-id="food-type-form"]')
-      .select("Cena")
-      .should("have.value", "cena");
-
-    cy.get('[data-test-id="ingredients-recipe-form"]')
-      .type(ingredients)
-      .should("have.value", ingredients);
-
-    cy.get('[data-test-id="description-recipe-form"]')
-      .type(description)
-      .should("have.value", description);
-
-    cy.get('[id="button-create-recipe"]').click();
-  }
-);
 
 Cypress.Commands.add("clear_recipes", () => {
   cy.get('[data-test-id="title-recipe-form"]').clear();

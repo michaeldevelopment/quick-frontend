@@ -1,6 +1,7 @@
 describe("Quick Testing", () => {
   //////// SIGNUP form
   it("Sup Username not valid", () => {
+    cy.request("DELETE", `${Cypress.env("api_url")}/recipes`);
     cy.visit(`${Cypress.env("client_url")}`);
     cy.get('[id="navbar-signup-button"]').click();
     cy.url().should("include", "/signup");
@@ -55,7 +56,6 @@ describe("Quick Testing", () => {
   });
 
   it("Successful signup", () => {
-    cy.request("DELETE", `${Cypress.env("api_url")}/recipes`);
     cy.url().should("include", "/signup");
     cy.signup({
       name: "Quick",
@@ -101,41 +101,16 @@ describe("Quick Testing", () => {
     });
   });
 
-  it("Photo not valid", () => {
+  it("Create Recipe", () => {
     cy.get('[id="navbar-recipes-button"]').click();
     cy.get('[id="navbar-createrecipe-button"]').click();
-    cy.create_recipe_without_photo({
-      title: "Arroz con pollo",
-      ingredients: "Cebolla, Alverja, Ajo, Pollo, Arroz, etc.",
-      description: "Preparacion detallada del arroz con pollo",
-    });
-    cy.clear_recipes();
-  });
-
-  it("Title not valid", () => {
     cy.create_recipe({
-      title: "Arroz",
-      ingredients: "Cebolla, Alverja, Ajo, Pollo, Arroz, etc.",
+      title: "Arroz con pollo",
+      ingredients: "Cebolla, Alverja, Ajo, Pollo, Arroz",
       description: "Preparacion detallada del arroz con pollo",
     });
-    cy.clear_recipes();
+    cy.wait(1000);
+    cy.get('[id="recipe-created-button-home"]').click();
+    cy.get('[id="navbar-recipes-button"]').click();
   });
-
-  // it("Ingredients not valid", () => {
-  //   cy.create_recipe({
-  //     title: "Arroz con pollo",
-  //     ingredients: "Cebolla",
-  //     description: "Preparacion detallada del arroz con pollo",
-  //   });
-  //   cy.clear_recipes();
-  // });
-
-  // it("Create Recipe", () => {
-  //   cy.create_recipe({
-  //     title: "Arroz con pollo",
-  //     ingredients: "Cebolla, Alverja, Ajo, Pollo, Arroz, etc.",
-  //     description: "Preparacion detallada del arroz con pollo",
-  //   });
-  //   cy.get('[id="navbar-recipes-button"]').click();
-  // });
 });

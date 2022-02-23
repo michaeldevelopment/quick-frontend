@@ -6,7 +6,6 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 
 import "./pages.scss";
 
-
 export default function RecipeCreated() {
   const navigate = useNavigate();
   return (
@@ -17,7 +16,12 @@ export default function RecipeCreated() {
         </h2>
         <h3>¡La receta ha sido creada ha sido creada satisfactoriamente!</h3>
         <p> Gracias por compartir tu experticie. </p>
-        <Button variant="danger" onClick={() => navigate("/")} size="lg">
+        <Button
+          variant="danger"
+          onClick={() => navigate("/")}
+          size="lg"
+          id="recipe-created-button-home"
+        >
           Ir al Home
         </Button>
       </Container>
