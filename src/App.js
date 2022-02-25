@@ -8,6 +8,7 @@ import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import EmailRecovery from "./Pages/EmailRecovery";
+import PasswordRecovery from "./Pages/PasswordRecovery";
 import PasswordReset from "./Pages/PasswordReset";
 import PasswordChanged from "./Pages/PasswordChanged";
 import CreateRecipe from "./Pages/CreateRecipe";
@@ -16,6 +17,7 @@ import RedirectUser from "./Pages/RedirectUser";
 import RecipeCreated from "./Pages/RecipeCreated";
 import ShowAllRecipes from "./Pages/ShowAllRecipes";
 import Plans from "./Pages/Plans";
+
 import Page404 from "./Pages/Page404";
 
 import Navigation from "./Components/Navigation";
@@ -112,6 +114,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="/passwordrecovery/:id" element={<PasswordRecovery />} />
           <Route path="/passwordreset/:id" element={<PasswordReset />} />
           <Route path="/passwordchanged/:id" element={<PasswordChanged />} />
           <Route
