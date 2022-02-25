@@ -70,6 +70,14 @@ const makePaymentReq = async (obj) => {
   });
 };
 
+const passwordResetReq = async (obj) => {
+  return await axios.post(`${config.apiUrl}/users/passwordreset`, obj);
+};
+
+const passwordRecoveryReq = async (email) => {
+  return await axios.post(`${config.apiUrl}/users/passwordrecovery`, email);
+};
+
 export default {
   signUpReq,
   loginReq,
@@ -80,4 +88,6 @@ export default {
   deleteRecipeReq,
   deleteFavReq,
   makePaymentReq,
+  passwordRecoveryReq,
+  passwordResetReq,
 };
