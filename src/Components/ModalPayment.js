@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Accordion from "react-bootstrap/Accordion";
+import Alert from "react-bootstrap/Alert";
 import Spinner from "react-bootstrap/Spinner";
 import Container from "react-bootstrap/Spinner";
 
@@ -73,6 +74,7 @@ export default function ModalPayment({ show, setShow }) {
           updatedUser.premium.premiumStatus
         );
       } else {
+        console.log(data);
         setAlert({ show: true, error: data.message });
       }
     });
@@ -219,7 +221,6 @@ export default function ModalPayment({ show, setShow }) {
                   />
                 )}
               </Button>
-              )
             </Modal.Footer>
           </Form>
         ) : (
