@@ -20,16 +20,21 @@ import "./pages.scss";
 
 export default function CreateRecipe() {
   const [handleInputs, setHandleInputs] = useState([]);
+  const [handleIngredients, setHandleIngredients] = useState([]);
   const [showSpinner, setShowSpinner] = useState(false);
+  const [isUploaded, setIsUploaded] = useState(false);
   const [alert, setAlert] = useState({});
   const [check, setCheck] = useState();
-  const [isUploaded, setIsUploaded] = useState(false);
   const navigate = useNavigate();
   const auth = useAuth();
   const { user } = auth;
 
   const handleCheckbox = (e) => {
     setCheck(e.target.value);
+  };
+
+  const handleIngredientsChange = ({ target }) => {
+    setHandleIngredients({ ...handleIngredients, [target.name]: target.value });
   };
 
   const handleChange = ({ target }) => {
@@ -67,14 +72,13 @@ export default function CreateRecipe() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { title, category, food_hour, ingredients, description, photos } =
-      handleInputs;
+    const { title, category, food_hour, description, photos } = handleInputs;
 
     const recipe = {
       title,
       category,
       food_hour,
-      ingredients,
+      // ingredients: handleIngredients,
       description,
       photos,
       premium: check === "on" ? true : false,
@@ -111,16 +115,9 @@ export default function CreateRecipe() {
           <p>{alert.message}</p>
         </Alert>
       )}
-      <Row>
-        <Col>
-          <Image src={quickIcon} alt="quick-logo" />
-          <h3>
-            <strong> Hora de crear tu receta! </strong>
-          </h3>
-        </Col>
-
-        <Col className="p-3">
-          <Form className="recipe-form" noValidate onSubmit={handleSubmit}>
+      <Form className="recipe-form" noValidate onSubmit={handleSubmit}>
+        <Row>
+          <Col className="p-3" lg={6} md={12}>
             <Form.Group>
               <Row>
                 <Col>
@@ -180,19 +177,25 @@ export default function CreateRecipe() {
                   </FloatingLabel>
                 </Col>
               </Row>
-
               <FloatingLabel
-                controlId="floatingTextarea2"
-                label="Ingredientes"
-                className="my-4 text-muted"
+                controlId="floatingSelect"
+                label="Cantidad de ingredientes"
               >
-                <Form.Control
-                  as="textarea"
-                  placeholder="Escribe aquí los ingredientes de tu receta"
+                <Form.Select
+                  aria-label="Floating label select example"
+                  className="mt-4"
                   onChange={handleChange}
-                  name="ingredients"
-                  data-test-id="ingredients-recipe-form"
-                />
+                  name="ingredientsAmount"
+                  data-test-id="food-type-form"
+                >
+                  <option value="opt">Selecciona una opción</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                </Form.Select>
               </FloatingLabel>
 
               <FloatingLabel
@@ -203,7 +206,7 @@ export default function CreateRecipe() {
                 <Form.Control
                   className="my-4"
                   as="textarea"
-                  rows={8}
+                  style={{ height: "300px" }}
                   placeholder="Escribe aquí la preparación detallada de ésta receta"
                   onChange={handleChange}
                   name="description"
@@ -236,25 +239,69 @@ export default function CreateRecipe() {
                 data-test-id="photos-recipe-form"
               />
             </Form.Group>
+          </Col>
 
-            <Button
-              variant="danger"
-              type="submit"
-              disabled={isUploaded}
-              id="button-create-recipe"
-            >
-              Crear Receta
-              {showSpinner && (
-                <Spinner
-                  animation="border"
-                  className="spinner-border-sm"
-                  variant="white"
-                />
+          <Col>
+            <Row lg={6} md={12}>
+              {handleInputs.ingredientsAmount ? (
+                Array.from(
+                  {
+                    length: handleInputs.ingredientsAmount,
+                  },
+                  (v, i) => i
+                ).map((index) => (
+                  <Col lg={4} key={index + 1}>
+                    <FloatingLabel
+                      controlId="floatingTextarea2"
+                      label={`Ingrediente ${index + 1}`}
+                      className="my-4 text-muted recipeIngredients"
+                    >
+                      <Form.Control
+                        type="text"
+                        onChange={handleIngredientsChange}
+                        name={`ingredient${index + 1}`}
+                        data-test-id="ingredients-recipe-form"
+                      />
+                    </FloatingLabel>
+                    <FloatingLabel
+                      controlId="floatingTextarea2"
+                      label="Cantidad"
+                      className="my-4 text-muted recipeIngredients  "
+                    >
+                      <Form.Control
+                        type="text"
+                        onChange={handleIngredientsChange}
+                        name={`quantity_ingredient${index + 1}`}
+                        data-test-id="ingredients-recipe-form"
+                      />
+                    </FloatingLabel>
+                  </Col>
+                ))
+              ) : (
+                <div className="mx-auto">
+                  <Image src={quickIcon} alt="quick-logo" />
+                </div>
               )}
-            </Button>
-          </Form>
-        </Col>
-      </Row>
+            </Row>
+          </Col>
+          <Button
+            variant="danger"
+            type="submit"
+            disabled={isUploaded}
+            id="button-create-recipe"
+            size="lg"
+          >
+            Crear Receta
+            {showSpinner && (
+              <Spinner
+                animation="border"
+                className="spinner-border-sm"
+                variant="white"
+              />
+            )}
+          </Button>
+        </Row>
+      </Form>
     </Container>
   );
 }
