@@ -10,10 +10,13 @@ import req from "../axiosReq/index";
 import { useAuth } from "../Context/useAuth";
 import { setUser, setToken } from "../Session/dataUser";
 
+import { useNavigate } from "react-router-dom";
+
 export default function Login() {
   const [handleInputs, setHandleInputs] = useState([]);
   const [alert, setAlert] = useState({});
   const auth = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setHandleInputs({ ...handleInputs, [e.target.name]: e.target.value });
@@ -83,6 +86,15 @@ export default function Login() {
             onChange={handleChange}
           />
         </Form.Group>
+
+        <p
+          onClick={() => navigate("/emailrecovery")}
+          className="text-danger"
+          role="button"
+        >
+          {" "}
+          ¿Olvidaste tu contraseña?
+        </p>
 
         <Button variant="danger" type="submit">
           Enviar
