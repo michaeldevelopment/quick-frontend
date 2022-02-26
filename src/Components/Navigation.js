@@ -71,6 +71,13 @@ export default function Navigation({ children }) {
                         >
                           Mis recetas
                         </Dropdown.Item>
+                        <Dropdown.Item
+                          as={Link}
+                          to={`/createrecipe`}
+                          id="dropdown-myrecipes-button"
+                        >
+                          Crear receta
+                        </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item
                           onClick={() => logoutUser()}
@@ -85,10 +92,10 @@ export default function Navigation({ children }) {
                       className="navbar-button mx-3"
                       variant="danger"
                       as={Link}
-                      to="/createrecipe"
+                      to={`/dashboard/${user?.id}`}
                       id="navbar-createrecipe-button"
                     >
-                      Crear Receta
+                      Crea tu QuickPlan
                     </Button>
                   </>
                 ) : (

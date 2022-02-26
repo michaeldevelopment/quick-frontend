@@ -17,6 +17,8 @@ import RedirectUser from "./Pages/RedirectUser";
 import RecipeCreated from "./Pages/RecipeCreated";
 import ShowAllRecipes from "./Pages/ShowAllRecipes";
 import Plans from "./Pages/Plans";
+import Dashboard from "./Pages/Dashboard";
+import PremiumRoute from "./Pages/PremiumRoute";
 
 import Page404 from "./Pages/Page404";
 
@@ -127,6 +129,24 @@ function App() {
           />
           <Route path="/plans" element={<Plans />} />
           <Route path="*" element={<Page404 />} />
+          <Route
+            path="/dashboard/:id"
+            element={
+              <PremiumRoute>
+                <Suspense
+                  fallback={
+                    <Spinner
+                      animation="border"
+                      variant="secondary"
+                      className="mx-5"
+                    />
+                  }
+                >
+                  <Dashboard />
+                </Suspense>
+              </PremiumRoute>
+            }
+          />
         </Routes>
       </Navigation>
     </>
