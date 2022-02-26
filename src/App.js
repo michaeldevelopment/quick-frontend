@@ -4,6 +4,9 @@ import { Routes, Route } from "react-router-dom";
 import { useAuth } from "./Context/useAuth";
 import req from "./axiosReq/index";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";

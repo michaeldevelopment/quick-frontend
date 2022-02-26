@@ -76,8 +76,8 @@ const Recipe = ({
 
   return (
     <>
-      <Col key={idRecipe} lg={4} md={6} xs={12}>
-        <Card className="recipeCard my-3">
+      <Col key={idRecipe} xs={12} sm={12}>
+        <Card className="recipeCard my-3 mx-4">
           <Card.Img
             variant="top"
             src={img}

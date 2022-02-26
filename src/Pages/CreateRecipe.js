@@ -112,8 +112,8 @@ export default function CreateRecipe() {
         });
         console.log(data.savedRecipe);
 
-        // auth.addRecipes(data.savedRecipe);
-        // navigate("/recipecreated");
+        auth.addRecipes(data.savedRecipe);
+        navigate("/recipecreated");
       }
     });
   };
