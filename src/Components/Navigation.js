@@ -62,14 +62,14 @@ export default function Navigation({ children }) {
                           to={`/myfavs/${user?.id}`}
                           id="dropdown-myfavs-button"
                         >
-                          My Favs
+                          Mis favoritos
                         </Dropdown.Item>
                         <Dropdown.Item
                           as={Link}
                           to={`/myrecipes/${user?.id}`}
                           id="dropdown-myrecipes-button"
                         >
-                          My Recipes
+                          Mis recetas
                         </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item

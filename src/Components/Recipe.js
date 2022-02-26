@@ -12,6 +12,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Badge from "react-bootstrap/Badge";
 import { FaStar } from "react-icons/fa";
 import { ImBlocked } from "react-icons/im";
+import { FcOk } from "react-icons/fc";
 
 import { useParams } from "react-router-dom";
 
@@ -83,7 +84,6 @@ const Recipe = ({
             className="imgRecipe mx-auto rounded img-thumbnail"
           />
           <Card.Header className="cardHeader">
-            <h5>{title}</h5>
             {premium ? (
               <Badge bg="danger">Premium</Badge>
             ) : (
@@ -91,7 +91,7 @@ const Recipe = ({
             )}
           </Card.Header>
           <Card.Body>
-            <Card.Title>{ingredients}</Card.Title>
+            <Card.Title>{title}</Card.Title>
             <p className="text-muted"> Especial para: {food_hour} </p>
             <hr />
             <p className="text-muted">
@@ -170,7 +170,15 @@ const Recipe = ({
             </Col>
             <Col>
               <h5> Ingredientes: </h5>
-              <p> {ingredients} </p>
+              <ul className="list-unstyled">
+                {ingredients.map((ingredient, index) => (
+                  <li key={index}>
+                    <FcOk className="text-warning" /> {"  "}
+                    {ingredient.name} <strong>{ingredient.quantity}</strong>
+                  </li>
+                ))}
+              </ul>
+              {/* <p> {ingredients} </p> */}
             </Col>
           </Row>
           <hr />

@@ -34,7 +34,10 @@ export default function CreateRecipe() {
   };
 
   const handleIngredientsChange = ({ target }) => {
-    setHandleIngredients({ ...handleIngredients, [target.name]: target.value });
+    setHandleIngredients({
+      ...handleIngredients,
+      [target.name]: target.value,
+    });
   };
 
   const handleChange = ({ target }) => {
@@ -72,13 +75,23 @@ export default function CreateRecipe() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    let ingredientsObj = [];
+
+    for (var i = 1; i <= handleInputs.ingredientsAmount; i++) {
+      const obj = {
+        name: handleIngredients[`ingredient${i}`],
+        quantity: handleIngredients[`quantity${i}`],
+      };
+      ingredientsObj.push(obj);
+    }
+
     const { title, category, food_hour, description, photos } = handleInputs;
 
     const recipe = {
       title,
       category,
       food_hour,
-      // ingredients: handleIngredients,
+      ingredients: ingredientsObj,
       description,
       photos,
       premium: check === "on" ? true : false,
@@ -97,9 +110,10 @@ export default function CreateRecipe() {
           message: data.message,
           variant: "success",
         });
+        console.log(data.savedRecipe);
 
-        auth.addRecipes(data.savedRecipe);
-        navigate("/recipecreated");
+        // auth.addRecipes(data.savedRecipe);
+        // navigate("/recipecreated");
       }
     });
   };
@@ -195,6 +209,9 @@ export default function CreateRecipe() {
                   <option value="7">7</option>
                   <option value="8">8</option>
                   <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
                 </Form.Select>
               </FloatingLabel>
 
@@ -271,7 +288,7 @@ export default function CreateRecipe() {
                       <Form.Control
                         type="text"
                         onChange={handleIngredientsChange}
-                        name={`quantity_ingredient${index + 1}`}
+                        name={`quantity${index + 1}`}
                         data-test-id="ingredients-recipe-form"
                       />
                     </FloatingLabel>
