@@ -74,7 +74,6 @@ export default function ModalPayment({ show, setShow }) {
           updatedUser.premium.premiumStatus
         );
       } else {
-        console.log(data);
         setAlert({ show: true, error: data.message });
       }
     });
