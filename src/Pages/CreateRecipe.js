@@ -200,7 +200,7 @@ export default function CreateRecipe() {
                   className="mt-4"
                   onChange={handleChange}
                   name="ingredientsAmount"
-                  data-test-id="food-type-form"
+                  data-test-id="ingredients-select-form"
                 >
                   <option value="opt">Selecciona una opción</option>
                   <option value="4">4</option>
@@ -277,7 +277,7 @@ export default function CreateRecipe() {
                         type="text"
                         onChange={handleIngredientsChange}
                         name={`ingredient${index + 1}`}
-                        data-test-id="ingredients-recipe-form"
+                        data-test-id={`ingredient-${index + 1}`}
                       />
                     </FloatingLabel>
                     <FloatingLabel
@@ -289,7 +289,7 @@ export default function CreateRecipe() {
                         type="text"
                         onChange={handleIngredientsChange}
                         name={`quantity${index + 1}`}
-                        data-test-id="ingredients-recipe-form"
+                        data-test-id={`quantity-${index + 1}`}
                       />
                     </FloatingLabel>
                   </Col>

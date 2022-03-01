@@ -98,7 +98,7 @@ export default function Login() {
           ¿Olvidaste tu contraseña?
         </p>
 
-        <Button variant="danger" type="submit">
+        <Button variant="danger" type="submit" id="button-login-form">
           Enviar
         </Button>
       </Form>

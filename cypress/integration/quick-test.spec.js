@@ -106,7 +106,14 @@ describe("Quick Testing", () => {
     cy.get('[id="navbar-createrecipe-button"]').click();
     cy.create_recipe({
       title: "Arroz con pollo",
-      ingredients: "Cebolla, Alverja, Ajo, Pollo, Arroz",
+      ingredient1: "Arroz",
+      quantity1: "100 g",
+      ingredient2: "Pollo",
+      quantity2: "1/2 kg",
+      ingredient3: "Cebolla",
+      quantity3: "1",
+      ingredient4: "Tomate",
+      quantity4: "1",
       description: "Preparacion detallada del arroz con pollo",
     });
     cy.wait(1000);
