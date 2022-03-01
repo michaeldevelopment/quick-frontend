@@ -1,5 +1,6 @@
 import React from "react";
 import quickLogo from "../Images/quick-menu-png.png";
+
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Image from "react-bootstrap/Image";
@@ -26,16 +27,20 @@ export default function Navigation({ children }) {
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
-                <Nav.Link as={Link} to="/">
+                <Nav.Link as={Link} to="/" id="navbar-home-button">
                   <li> Inicio </li>
                 </Nav.Link>
                 {user?.username && (
-                  <Nav.Link as={Link} to="/allrecipes">
+                  <Nav.Link
+                    as={Link}
+                    to="/allrecipes"
+                    id="navbar-recipes-button"
+                  >
                     <li> Ver Recetas </li>
                   </Nav.Link>
                 )}
                 {!user?.premium && (
-                  <Nav.Link as={Link} to="/plans">
+                  <Nav.Link as={Link} to="/plans" id="navbar-plans-button">
                     <li> Planes </li>
                   </Nav.Link>
                 )}
@@ -43,7 +48,7 @@ export default function Navigation({ children }) {
                   <>
                     <Dropdown>
                       <Dropdown.Toggle
-                        id="dropdown-basic"
+                        id="quick-dropdown"
                         variant="danger"
                         className="nav-dropdown border-0"
                       >
@@ -52,16 +57,24 @@ export default function Navigation({ children }) {
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu>
-                        <Dropdown.Item as={Link} to={`/myfavs/${user?.id}`}>
-                          My Favs
+                        <Dropdown.Item
+                          as={Link}
+                          to={`/myfavs/${user?.id}`}
+                          id="dropdown-myfavs-button"
+                        >
+                          Mis favoritos
                         </Dropdown.Item>
-                        <Dropdown.Item as={Link} to={`/myrecipes/${user?.id}`}>
-                          My Recipes
+                        <Dropdown.Item
+                          as={Link}
+                          to={`/myrecipes/${user?.id}`}
+                          id="dropdown-myrecipes-button"
+                        >
+                          Mis recetas
                         </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item
                           onClick={() => logoutUser()}
-                          id="logout-button"
+                          id="dropdown-logout-button"
                         >
                           Cerrar Sesión
                         </Dropdown.Item>
@@ -73,6 +86,7 @@ export default function Navigation({ children }) {
                       variant="danger"
                       as={Link}
                       to="/createrecipe"
+                      id="navbar-createrecipe-button"
                     >
                       Crear Receta
                     </Button>
@@ -84,6 +98,7 @@ export default function Navigation({ children }) {
                       variant="danger"
                       as={Link}
                       to="/login"
+                      id="navbar-login-button"
                     >
                       Login
                     </Button>
@@ -93,6 +108,7 @@ export default function Navigation({ children }) {
                       variant="danger"
                       as={Link}
                       to="/signup"
+                      id="navbar-signup-button"
                     >
                       Sign Up
                     </Button>

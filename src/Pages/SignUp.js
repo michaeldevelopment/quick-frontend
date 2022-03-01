@@ -81,17 +81,19 @@ export default function SignUp() {
         <Form.Group>
           <InputGroup className="mb-3">
             <InputGroup.Text>Ingresa tu nombre y apellido</InputGroup.Text>
-            <FormControl
+            <Form.Control
               aria-label="First name"
               name="firstName"
               placeholder="Nombre"
               onChange={handleChange}
+              data-test-id="name-signup-form"
             />
-            <FormControl
+            <Form.Control
               aria-label="Last name"
               name="lastName"
               placeholder="Apellido"
               onChange={handleChange}
+              data-test-id="lastname-signup-form"
             />
           </InputGroup>
         </Form.Group>
@@ -103,6 +105,7 @@ export default function SignUp() {
             placeholder="name@example.com"
             name="email"
             onChange={handleChange}
+            data-test-id="email-signup-form"
           />
           <Form.Text className="text-muted">
             No compartiremos tu email con nadie más.
@@ -115,10 +118,11 @@ export default function SignUp() {
           </Form.Label>
           <InputGroup className="mb-2">
             <InputGroup.Text>@</InputGroup.Text>
-            <FormControl
+            <Form.Control
               id="inlineFormInputGroup"
               name="username"
               onChange={handleChange}
+              data-test-id="username-signup-form"
             />
           </InputGroup>
         </Form.Group>
@@ -129,6 +133,7 @@ export default function SignUp() {
             type="password"
             name="password"
             onChange={handleChange}
+            data-test-id="password-signup-form"
           />
         </Form.Group>
 
@@ -138,9 +143,10 @@ export default function SignUp() {
             type="password"
             name="validpassword"
             onChange={handleChange}
+            data-test-id="validpassword-signup-form"
           />
         </Form.Group>
-        <Button variant="danger" type="submit">
+        <Button variant="danger" type="submit" id="button-signup-form">
           Enviar
         </Button>
       </Form>

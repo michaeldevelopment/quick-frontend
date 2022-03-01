@@ -74,6 +74,7 @@ export default function Login() {
               id="inlineFormInputGroup"
               name="username"
               onChange={handleChange}
+              data-test-id="username-login-form"
             />
           </InputGroup>
         </Form.Group>
@@ -84,6 +85,7 @@ export default function Login() {
             type="password"
             name="password"
             onChange={handleChange}
+            data-test-id="password-login-form"
           />
         </Form.Group>
 

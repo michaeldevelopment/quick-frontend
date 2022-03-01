@@ -20,16 +20,24 @@ import "./pages.scss";
 
 export default function CreateRecipe() {
   const [handleInputs, setHandleInputs] = useState([]);
+  const [handleIngredients, setHandleIngredients] = useState([]);
   const [showSpinner, setShowSpinner] = useState(false);
+  const [isUploaded, setIsUploaded] = useState(false);
   const [alert, setAlert] = useState({});
   const [check, setCheck] = useState();
-  const [isUploaded, setIsUploaded] = useState(false);
   const navigate = useNavigate();
   const auth = useAuth();
   const { user } = auth;
 
   const handleCheckbox = (e) => {
     setCheck(e.target.value);
+  };
+
+  const handleIngredientsChange = ({ target }) => {
+    setHandleIngredients({
+      ...handleIngredients,
+      [target.name]: target.value,
+    });
   };
 
   const handleChange = ({ target }) => {
@@ -67,14 +75,23 @@ export default function CreateRecipe() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { title, category, food_hour, ingredients, description, photos } =
-      handleInputs;
+    let ingredientsObj = [];
+
+    for (var i = 1; i <= handleInputs.ingredientsAmount; i++) {
+      const obj = {
+        name: handleIngredients[`ingredient${i}`],
+        quantity: handleIngredients[`quantity${i}`],
+      };
+      ingredientsObj.push(obj);
+    }
+
+    const { title, category, food_hour, description, photos } = handleInputs;
 
     const recipe = {
       title,
       category,
       food_hour,
-      ingredients,
+      ingredients: ingredientsObj,
       description,
       photos,
       premium: check === "on" ? true : false,
@@ -93,9 +110,10 @@ export default function CreateRecipe() {
           message: data.message,
           variant: "success",
         });
+        console.log(data.savedRecipe);
 
-        auth.addRecipes(data.savedRecipe);
-        navigate("/recipecreated");
+        // auth.addRecipes(data.savedRecipe);
+        // navigate("/recipecreated");
       }
     });
   };
@@ -111,16 +129,9 @@ export default function CreateRecipe() {
           <p>{alert.message}</p>
         </Alert>
       )}
-      <Row>
-        <Col>
-          <Image src={quickIcon} alt="quick-logo" />
-          <h3>
-            <strong> Hora de crear tu receta! </strong>
-          </h3>
-        </Col>
-
-        <Col className="p-3">
-          <Form className="recipe-form" noValidate onSubmit={handleSubmit}>
+      <Form className="recipe-form" noValidate onSubmit={handleSubmit}>
+        <Row>
+          <Col className="p-3" lg={6} md={12}>
             <Form.Group>
               <Row>
                 <Col>
@@ -134,6 +145,7 @@ export default function CreateRecipe() {
                       placeholder="Arroz con pollo"
                       onChange={handleChange}
                       name="title"
+                      data-test-id="title-recipe-form"
                     />
                   </FloatingLabel>
                 </Col>
@@ -143,6 +155,7 @@ export default function CreateRecipe() {
                       aria-label="Floating label select example"
                       onChange={handleChange}
                       name="category"
+                      data-test-id="category-select-form"
                     >
                       <option value="opt">Selecciona una opción</option>
                       <option value="pollo">Pollo</option>
@@ -168,6 +181,7 @@ export default function CreateRecipe() {
                       aria-label="Floating label select example"
                       onChange={handleChange}
                       name="food_hour"
+                      data-test-id="food-type-form"
                     >
                       <option value="opt">Selecciona una opción</option>
                       <option value="desayuno">Desayuno</option>
@@ -177,38 +191,45 @@ export default function CreateRecipe() {
                   </FloatingLabel>
                 </Col>
               </Row>
-
-              <Form.Group>
-                <FloatingLabel
-                  controlId="floatingTextarea2"
-                  label="Ingredientes"
-                  className="my-4 text-muted"
+              <FloatingLabel
+                controlId="floatingSelect"
+                label="Cantidad de ingredientes"
+              >
+                <Form.Select
+                  aria-label="Floating label select example"
+                  className="mt-4"
+                  onChange={handleChange}
+                  name="ingredientsAmount"
+                  data-test-id="food-type-form"
                 >
-                  <Form.Control
-                    as="textarea"
-                    placeholder="Escribe aquí los ingredientes de tu receta"
-                    onChange={handleChange}
-                    name="ingredients"
-                  />
-                </FloatingLabel>
-              </Form.Group>
+                  <option value="opt">Selecciona una opción</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </Form.Select>
+              </FloatingLabel>
 
-              <Form.Group>
-                <FloatingLabel
-                  controlId="floatingTextarea2"
-                  label="Preparación"
-                  className="text-muted"
-                >
-                  <Form.Control
-                    className="my-4"
-                    as="textarea"
-                    rows={8}
-                    placeholder="Escribe aquí la preparación detallada de ésta receta"
-                    onChange={handleChange}
-                    name="description"
-                  />
-                </FloatingLabel>
-              </Form.Group>
+              <FloatingLabel
+                controlId="floatingTextarea2"
+                label="Preparación"
+                className="text-muted"
+              >
+                <Form.Control
+                  className="my-4"
+                  as="textarea"
+                  style={{ height: "300px" }}
+                  placeholder="Escribe aquí la preparación detallada de ésta receta"
+                  onChange={handleChange}
+                  name="description"
+                  data-test-id="description-recipe-form"
+                />
+              </FloatingLabel>
             </Form.Group>
 
             {user?.premium && (
@@ -232,23 +253,72 @@ export default function CreateRecipe() {
                 accept=".jpg,.jpeg,.gif,.png"
                 onChange={handlePhotoChange}
                 multiple
-                data-test-id="photos-post-form"
+                data-test-id="photos-recipe-form"
               />
             </Form.Group>
+          </Col>
 
-            <Button variant="danger" type="submit" disabled={isUploaded}>
-              Crear Receta
-              {showSpinner && (
-                <Spinner
-                  animation="border"
-                  className="spinner-border-sm"
-                  variant="white"
-                />
+          <Col>
+            <Row lg={6} md={12}>
+              {handleInputs.ingredientsAmount ? (
+                Array.from(
+                  {
+                    length: handleInputs.ingredientsAmount,
+                  },
+                  (v, i) => i
+                ).map((index) => (
+                  <Col lg={4} key={index + 1}>
+                    <FloatingLabel
+                      controlId="floatingTextarea2"
+                      label={`Ingrediente ${index + 1}`}
+                      className="my-4 text-muted recipeIngredients"
+                    >
+                      <Form.Control
+                        type="text"
+                        onChange={handleIngredientsChange}
+                        name={`ingredient${index + 1}`}
+                        data-test-id="ingredients-recipe-form"
+                      />
+                    </FloatingLabel>
+                    <FloatingLabel
+                      controlId="floatingTextarea2"
+                      label="Cantidad"
+                      className="my-4 text-muted recipeIngredients  "
+                    >
+                      <Form.Control
+                        type="text"
+                        onChange={handleIngredientsChange}
+                        name={`quantity${index + 1}`}
+                        data-test-id="ingredients-recipe-form"
+                      />
+                    </FloatingLabel>
+                  </Col>
+                ))
+              ) : (
+                <div className="mx-auto">
+                  <Image src={quickIcon} alt="quick-logo" />
+                </div>
               )}
-            </Button>
-          </Form>
-        </Col>
-      </Row>
+            </Row>
+          </Col>
+          <Button
+            variant="danger"
+            type="submit"
+            disabled={isUploaded}
+            id="button-create-recipe"
+            size="lg"
+          >
+            Crear Receta
+            {showSpinner && (
+              <Spinner
+                animation="border"
+                className="spinner-border-sm"
+                variant="white"
+              />
+            )}
+          </Button>
+        </Row>
+      </Form>
     </Container>
   );
 }
