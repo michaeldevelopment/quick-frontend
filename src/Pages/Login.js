@@ -4,13 +4,12 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
 import Alert from "react-bootstrap/Alert";
+
 import { useSelector, useDispatch } from "react-redux";
+import { userAuth, alertMessage } from "../Store/actions";
 
 import { useNavigate } from "react-router-dom";
-
-import { loginUser, alertMessage } from "../Store/actions";
 
 export default function Login() {
   const alert = useSelector((state) => state.alert);
@@ -33,7 +32,7 @@ export default function Login() {
       password,
     };
 
-    dispatch(loginUser(formLoginUser));
+    dispatch(userAuth(formLoginUser, "login"));
   };
 
   return (
@@ -55,7 +54,7 @@ export default function Login() {
           </Form.Label>
           <InputGroup className="mb-2">
             <InputGroup.Text>@</InputGroup.Text>
-            <FormControl
+            <Form.Control
               id="inlineFormInputGroup"
               name="username"
               onChange={handleChange}

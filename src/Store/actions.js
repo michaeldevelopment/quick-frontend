@@ -11,8 +11,8 @@ export const loadToken = (token) => ({
   payload: token,
 });
 
-export const logOut = () => ({
-  type: "logOut",
+export const logoutUser = () => ({
+  type: "logoutUser",
   payload: null,
 });
 
@@ -26,10 +26,11 @@ export const alertMessage = (alert) => ({
   payload: alert,
 });
 
-export const loginUser = (dataLogin) => async (dispatch) => {
-  const userData = await req
-    .loginReq(dataLogin)
-    .then((response) => response.data);
+export const userAuth = (dataLogin, authType) => async (dispatch) => {
+  const userData =
+    authType === "login"
+      ? await req.loginReq(dataLogin).then((response) => response.data)
+      : await req.signUpReq(dataLogin).then((response) => response.data);
 
   if (userData.error)
     return dispatch(
@@ -47,10 +48,10 @@ export const loginUser = (dataLogin) => async (dispatch) => {
     premium: userData.premium,
   };
 
-  const token = userData.token;
+  const { username, email, id, premium, token } = userData;
 
   dispatch(loadUser(user));
-  setUser(user);
+  setUser(username, email, id, premium);
 
   dispatch(loadToken(token));
   setToken(token);

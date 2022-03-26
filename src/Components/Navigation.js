@@ -8,14 +8,23 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Link } from "react-router-dom";
-import { useAuth } from "../Context/useAuth";
+
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../Store/actions";
+import { clearStorage } from "../Session/dataUser";
 
 import { FaStar } from "react-icons/fa";
 import "./components.scss";
 
 export default function Navigation({ children }) {
-  const auth = useAuth();
-  const { user, logoutUser } = auth;
+  const userData = useSelector((state) => state.userData);
+  const dispatch = useDispatch();
+
+  const logOut = () => {
+    dispatch(logoutUser());
+    clearStorage();
+  };
+
   return (
     <>
       <div className="divNavBackgr">
@@ -30,7 +39,7 @@ export default function Navigation({ children }) {
                 <Nav.Link as={Link} to="/" id="navbar-home-button">
                   <li> Inicio </li>
                 </Nav.Link>
-                {user?.username && (
+                {userData?.username && (
                   <Nav.Link
                     as={Link}
                     to="/allrecipes"
@@ -39,12 +48,12 @@ export default function Navigation({ children }) {
                     <li> Ver Recetas </li>
                   </Nav.Link>
                 )}
-                {!user?.premium && (
+                {!userData?.premium && (
                   <Nav.Link as={Link} to="/plans" id="navbar-plans-button">
                     <li> Planes </li>
                   </Nav.Link>
                 )}
-                {user?.username ? (
+                {userData?.username ? (
                   <>
                     <Dropdown>
                       <Dropdown.Toggle
@@ -52,28 +61,30 @@ export default function Navigation({ children }) {
                         variant="danger"
                         className="nav-dropdown border-0"
                       >
-                        {user?.username}{" "}
-                        {user?.premium && <FaStar className="text-warning" />}
+                        {userData?.username}{" "}
+                        {userData?.premium && (
+                          <FaStar className="text-warning" />
+                        )}
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu>
                         <Dropdown.Item
                           as={Link}
-                          to={`/myfavs/${user?.id}`}
+                          to={`/myfavs/${userData?.id}`}
                           id="dropdown-myfavs-button"
                         >
                           Mis favoritos
                         </Dropdown.Item>
                         <Dropdown.Item
                           as={Link}
-                          to={`/myrecipes/${user?.id}`}
+                          to={`/myrecipes/${userData?.id}`}
                           id="dropdown-myrecipes-button"
                         >
                           Mis recetas
                         </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item
-                          onClick={() => logoutUser()}
+                          onClick={logOut}
                           id="dropdown-logout-button"
                         >
                           Cerrar Sesión

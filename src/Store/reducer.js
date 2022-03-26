@@ -6,6 +6,12 @@ function reducer(prevState = initialState, action) {
       return { ...prevState, recipes: action.payload };
     case "loadUser":
       return { ...prevState, userData: action.payload };
+    case "logoutUser":
+      return {
+        ...prevState,
+        userData: action.payload,
+        userToken: action.payload,
+      };
     case "loadToken":
       return { ...prevState, userToken: action.payload };
     case "alertMessage":
