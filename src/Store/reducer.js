@@ -16,6 +16,18 @@ function reducer(prevState = initialState, action) {
       return { ...prevState, userToken: action.payload };
     case "alertMessage":
       return { ...prevState, alert: action.payload };
+    case "deleteRecipe":
+      return {
+        ...prevState,
+        recipes: prevState.recipes.filter(
+          (recipe) => recipe.id !== action.payload
+        ),
+      };
+    case "addRecipe":
+      return {
+        ...prevState,
+        recipes: prevState.recipes.concat(action.payload),
+      };
     default:
       return prevState;
   }

@@ -8,13 +8,12 @@ import { useParams } from "react-router-dom";
 
 import req from "../axiosReq/index";
 import "./pages.scss";
-import { useAuth } from "../Context/useAuth";
+import { useSelector } from "react-redux";
 
 export default function MyFavs() {
+  const dataUser = useSelector((state) => state.dataUser);
   const [myFavRecipes, setMyFavRecipes] = useState([]);
-  const auth = useAuth();
   const { id } = useParams();
-  const { user } = auth;
 
   useEffect(
     () =>
@@ -35,7 +34,7 @@ export default function MyFavs() {
             myFavRecipes.map((recipe) => (
               <Recipe
                 title={recipe.title}
-                username={user?.username}
+                username={dataUser?.username}
                 category={recipe.category}
                 food_hour={recipe.food_hour}
                 ingredients={recipe.ingredients}

@@ -7,23 +7,15 @@ import Recipe from "../Components/Recipe";
 
 import { useParams } from "react-router-dom";
 
-import req from "../axiosReq/index";
 import "./pages.scss";
-import { useAuth } from "../Context/useAuth";
+import { useSelector } from "react-redux";
 
 export default function MyRecipes() {
-  const [myRecipes, setMyRecipes] = useState([]);
-  const auth = useAuth();
+  const recipes = useSelector((state) => state.recipes);
+  const dataUser = useSelector((state) => state.dataUser);
   const { id } = useParams();
-  const { user } = auth;
 
-  useEffect(
-    () =>
-      req
-        .getUserDataReq(id)
-        .then(({ data }) => setMyRecipes(...myRecipes, data.recipes)),
-    []
-  );
+  const myRecipes = recipes.filter((recipe) => recipe.user.id === id);
 
   return (
     <>
@@ -34,7 +26,7 @@ export default function MyRecipes() {
             myRecipes.map((recipe) => (
               <Recipe
                 title={recipe.title}
-                username={user?.username}
+                username={dataUser?.username}
                 category={recipe.category}
                 food_hour={recipe.food_hour}
                 ingredients={recipe.ingredients}

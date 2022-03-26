@@ -13,8 +13,6 @@ const Home = ({ recipes }) => {
   const userData = useSelector((state) => state.userData);
   const token = useSelector((state) => state.userToken);
 
-  console.log(userData, token);
-
   return (
     <div id="homeSection">
       <HeroHome />

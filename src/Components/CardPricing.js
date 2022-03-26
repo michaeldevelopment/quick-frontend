@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { BsCheckLg, BsXLg } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../Context/useAuth";
+import { useSelector } from "react-redux";
 
 import "./components.scss";
 
@@ -12,8 +12,7 @@ import ModalPayment from "./ModalPayment";
 const CardPricing = ({ text }) => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
-  const auth = useAuth();
-  const { user } = auth;
+  const userData = useSelector((state) => state.userData);
 
   const handleModal = () => {
     if (text === "free") {
@@ -93,7 +92,7 @@ const CardPricing = ({ text }) => {
           variant={text === "free" ? "dark" : "danger"}
           size="lg"
           className="buttonPricing"
-          onClick={user?.username ? handleModal : redirectLogin}
+          onClick={userData?.token ? handleModal : redirectLogin}
         >
           {text === "free" ? "Registrarme gratis" : "Obtener membresía"}
         </Button>

@@ -11,11 +11,6 @@ export const loadToken = (token) => ({
   payload: token,
 });
 
-export const logoutUser = () => ({
-  type: "logoutUser",
-  payload: null,
-});
-
 export const loadRecipes = (recipes) => ({
   type: "loadRecipes",
   payload: recipes,
@@ -24,6 +19,21 @@ export const loadRecipes = (recipes) => ({
 export const alertMessage = (alert) => ({
   type: "alertMessage",
   payload: alert,
+});
+
+export const addRecipe = (recipe) => ({
+  type: "addRecipe",
+  payload: recipe,
+});
+
+export const deleteRecipe = (recipe) => ({
+  type: "deleteRecipe",
+  payload: recipe,
+});
+
+export const logoutUser = () => ({
+  type: "logoutUser",
+  payload: null,
 });
 
 export const userAuth = (dataLogin, authType) => async (dispatch) => {
