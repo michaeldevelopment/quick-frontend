@@ -1,8 +1,8 @@
 import React, { useEffect, Suspense } from "react";
 
 import { Routes, Route } from "react-router-dom";
-import { useAuth } from "./Context/useAuth";
-import req from "./axiosReq/index";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchRecipes } from "./Store/actions";
 
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
@@ -28,11 +28,11 @@ const MyRecipes = React.lazy(() => import("./Pages/MyRecipes"));
 const MyFavs = React.lazy(() => import("./Pages/MyFavs"));
 
 function App() {
-  const auth = useAuth();
-  const { allRecipes } = auth;
+  const allRecipes = useSelector((state) => state.recipes);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    req.getRecipesReq().then((response) => auth.addAllRecipes(response.data));
+    dispatch(fetchRecipes());
   }, []);
 
   return (

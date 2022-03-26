@@ -3,21 +3,10 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
-import { useSelector, useDispatch } from "react-redux";
-import req from "../axiosReq/index";
-import { loadRecipes } from "../Store/actions";
 
 import { Link } from "react-router-dom";
 
 export default function About() {
-  const recipes = useSelector((state) => state.recipes);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    req.getRecipesReq().then((response) => dispatch(loadRecipes(response)));
-  }, []);
-
-  console.log(recipes);
   return (
     <Container className="firstSection p-5" id="about" fluid>
       <Row className="text-center mx-auto">

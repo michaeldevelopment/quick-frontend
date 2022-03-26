@@ -6,17 +6,19 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Alert from "react-bootstrap/Alert";
-import req from "../axiosReq/index";
-import { useAuth } from "../Context/useAuth";
-import { setUser, setToken } from "../Session/dataUser";
+import { useSelector, useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 
+import { loginUser, alertMessage } from "../Store/actions";
+
 export default function Login() {
-  const [handleInputs, setHandleInputs] = useState([]);
-  const [alert, setAlert] = useState({});
-  const auth = useAuth();
+  const alert = useSelector((state) => state.alert);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [handleInputs, setHandleInputs] = useState([]);
 
   const handleChange = (e) => {
     setHandleInputs({ ...handleInputs, [e.target.name]: e.target.value });
@@ -26,29 +28,12 @@ export default function Login() {
     e.preventDefault();
     const { username, password } = handleInputs;
 
-    const loginUser = {
+    const formLoginUser = {
       username,
       password,
     };
 
-    req.loginReq(loginUser).then(({ data }) => {
-      if (data.error) {
-        setAlert({
-          value: data.error,
-          message: data.message,
-          variant: "danger",
-        });
-      } else {
-        setAlert({
-          value: true,
-          message: "El usuario se ha logueado correctamente",
-          variant: "success",
-        });
-        auth.loginUser(data.username, data.email, data.id, data.premium);
-        setUser(data.username, data.email, data.id, data.premium);
-        setToken(data.token);
-      }
-    });
+    dispatch(loginUser(formLoginUser));
   };
 
   return (
@@ -56,7 +41,7 @@ export default function Login() {
       {alert.value && (
         <Alert
           variant={alert.variant}
-          onClose={() => setAlert({ ...alert, value: false })}
+          onClose={() => dispatch(alertMessage({ ...alert, value: false }))}
           dismissible
         >
           <p>{alert.message}</p>

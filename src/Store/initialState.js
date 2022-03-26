@@ -1,8 +1,9 @@
-import { getUser } from "../Session/dataUser";
+import { getUser, getToken } from "../Session/dataUser";
 
 export const initialState = {
   userData: getUser(),
   recipes: [],
   currentUserRecipes: [],
-  userPremiumStatus: null,
+  userToken: getToken(),
+  alert: {},
 };
