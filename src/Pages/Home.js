@@ -11,7 +11,6 @@ import "./pages.scss";
 
 const Home = ({ recipes }) => {
   const userData = useSelector((state) => state.userData);
-  const token = useSelector((state) => state.userToken);
 
   return (
     <div id="homeSection">

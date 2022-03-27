@@ -26,14 +26,29 @@ export const addRecipe = (recipe) => ({
   payload: recipe,
 });
 
-export const deleteRecipe = (recipe) => ({
+export const deleteRecipe = (idRecipe) => ({
   type: "deleteRecipe",
-  payload: recipe,
+  payload: idRecipe,
 });
 
 export const logoutUser = () => ({
   type: "logoutUser",
   payload: null,
+});
+
+export const authPremiumUser = (premiumStatus) => ({
+  type: "authPremiumUser",
+  payload: premiumStatus,
+});
+
+export const addRecipeToFav = (idRecipe) => ({
+  type: "addRecipeToFav",
+  payload: idRecipe,
+});
+
+export const deleteFavRecipe = (idRecipe) => ({
+  type: "deleteFavRecipe",
+  payload: idRecipe,
 });
 
 export const userAuth = (dataLogin, authType) => async (dispatch) => {
@@ -56,6 +71,7 @@ export const userAuth = (dataLogin, authType) => async (dispatch) => {
     email: userData.email,
     id: userData.id,
     premium: userData.premium,
+    favRecipes: userData.favRecipes,
   };
 
   const { username, email, id, premium, token } = userData;
@@ -70,4 +86,73 @@ export const userAuth = (dataLogin, authType) => async (dispatch) => {
 export const fetchRecipes = () => async (dispatch) => {
   const recipes = await req.getRecipesReq().then((response) => response.data);
   dispatch(loadRecipes(recipes));
+};
+
+export const loadRecipeToFav = (idRecipe) => async (dispatch) => {
+  const response = await req
+    .addToFavReq(idRecipe)
+    .then((response) => response.data);
+
+  response.error
+    ? dispatch(
+        alertMessage({
+          value: true,
+          message: response.message,
+          variant: "danger",
+        })
+      )
+    : (dispatch(
+        alertMessage({
+          value: true,
+          message: response.message,
+          variant: "success",
+        })
+      ),
+      dispatch(addRecipeToFav(idRecipe)));
+};
+
+export const handleDeleteRecipe = (idRecipe) => async (dispatch) => {
+  const response = req.deleteRecipeReq(idRecipe).then((response) => {
+    response.data;
+  });
+
+  response.error
+    ? dispatch(
+        alertMessage({
+          message: response.message,
+          value: true,
+          variant: "danger",
+        })
+      )
+    : (dispatch(
+        alertMessage({
+          message: response.message,
+          value: true,
+          variant: "success",
+        })
+      ),
+      dispatch(deleteRecipe(idRecipe)));
+};
+
+export const handleDeleteFavRecipe = (idRecipe) => async (dispatch) => {
+  const response = req.deleteFavReq(idRecipe).then((response) => {
+    response.data;
+  });
+
+  response.error
+    ? dispatch(
+        alertMessage({
+          message: response.message,
+          value: true,
+          variant: "danger",
+        })
+      )
+    : (dispatch(
+        alertMessage({
+          message: response.message,
+          value: true,
+          variant: "success",
+        })
+      ),
+      dispatch(deleteFavRecipe(idRecipe)));
 };

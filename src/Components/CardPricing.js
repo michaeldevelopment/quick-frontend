@@ -92,7 +92,7 @@ const CardPricing = ({ text }) => {
           variant={text === "free" ? "dark" : "danger"}
           size="lg"
           className="buttonPricing"
-          onClick={userData?.token ? handleModal : redirectLogin}
+          onClick={userData?.username ? handleModal : redirectLogin}
         >
           {text === "free" ? "Registrarme gratis" : "Obtener membresía"}
         </Button>

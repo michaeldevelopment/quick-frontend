@@ -5,7 +5,17 @@ function reducer(prevState = initialState, action) {
     case "loadRecipes":
       return { ...prevState, recipes: action.payload };
     case "loadUser":
-      return { ...prevState, userData: action.payload };
+      const user = {
+        username: action.payload.username,
+        email: action.payload.email,
+        id: action.payload.id,
+        premium: action.payload.premium,
+      };
+      return {
+        ...prevState,
+        userData: user,
+        myFavs: action.payload.favRecipes,
+      };
     case "logoutUser":
       return {
         ...prevState,
@@ -22,11 +32,33 @@ function reducer(prevState = initialState, action) {
         recipes: prevState.recipes.filter(
           (recipe) => recipe.id !== action.payload
         ),
+        myFavs: prevState.myFavs.filter(
+          (favRecipe) => favRecipe.id !== action.payload
+        ),
       };
     case "addRecipe":
       return {
         ...prevState,
         recipes: prevState.recipes.concat(action.payload),
+      };
+    case "authPremiumUser":
+      return {
+        ...prevState,
+        userData: { ...prevState.userData, premium: action.payload },
+      };
+    case "addRecipeToFav":
+      return {
+        ...prevState,
+        myFavs: prevState.myFavs.concat(
+          prevState.recipes.find((recipe) => recipe.id === action.payload)
+        ),
+      };
+    case "deleteFavRecipe":
+      return {
+        ...prevState,
+        myFavs: prevState.myFavs.filter(
+          (favRecipe) => favRecipe.id !== action.payload
+        ),
       };
     default:
       return prevState;

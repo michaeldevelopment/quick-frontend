@@ -1,29 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Recipe from "../Components/Recipe";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-import { useParams } from "react-router-dom";
-
-import req from "../axiosReq/index";
-import "./pages.scss";
 import { useSelector } from "react-redux";
+import "./pages.scss";
 
 export default function MyFavs() {
   const dataUser = useSelector((state) => state.dataUser);
-  const [myFavRecipes, setMyFavRecipes] = useState([]);
-  const { id } = useParams();
-
-  useEffect(
-    () =>
-      req
-        .getUserDataReq(id)
-        .then(({ data }) =>
-          setMyFavRecipes(...myFavRecipes, data.favoriteRecipes)
-        ),
-    []
-  );
+  const myFavRecipes = useSelector((state) => state.myFavs);
 
   return (
     <>
