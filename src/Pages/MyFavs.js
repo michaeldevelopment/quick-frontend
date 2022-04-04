@@ -1,30 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Recipe from "../Components/Recipe";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-import { useParams } from "react-router-dom";
-
-import req from "../axiosReq/index";
+import { useSelector } from "react-redux";
 import "./pages.scss";
-import { useAuth } from "../Context/useAuth";
 
 export default function MyFavs() {
-  const [myFavRecipes, setMyFavRecipes] = useState([]);
-  const auth = useAuth();
-  const { id } = useParams();
-  const { user } = auth;
-
-  useEffect(
-    () =>
-      req
-        .getUserDataReq(id)
-        .then(({ data }) =>
-          setMyFavRecipes(...myFavRecipes, data.favoriteRecipes)
-        ),
-    []
-  );
+  const dataUser = useSelector((state) => state.dataUser);
+  const myFavRecipes = useSelector((state) => state.myFavs);
 
   return (
     <>
@@ -35,7 +20,7 @@ export default function MyFavs() {
             myFavRecipes.map((recipe) => (
               <Recipe
                 title={recipe.title}
-                username={user?.username}
+                username={dataUser?.username}
                 category={recipe.category}
                 food_hour={recipe.food_hour}
                 ingredients={recipe.ingredients}

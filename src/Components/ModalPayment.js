@@ -22,15 +22,17 @@ import { useNavigate } from "react-router-dom";
 
 import req from "../axiosReq/index";
 
-import { useAuth } from "../Context/useAuth";
+import { useSelector, useDispatch } from "react-redux";
+import { authPremiumUser, alertMessage } from "../Store/actions";
+
 import { setUser } from "../Session/dataUser";
 
 export default function ModalPayment({ show, setShow }) {
+  const alert = useSelector((state) => state.alert);
   const [showSpinner, setShowSpinner] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [alert, setAlert] = useState({});
   const [handleInputs, setHandleInputs] = useState([]);
-  const auth = useAuth();
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -65,8 +67,8 @@ export default function ModalPayment({ show, setShow }) {
       setShowSpinner(false);
       if (!data.error) {
         const { updatedUser } = data;
+        dispatch(authPremiumUser(updatedUser.premium.premiumStatus));
         setSuccess(updatedUser.premium.premiumStatus);
-        auth.setPremiumUser(updatedUser.premium.premiumStatus);
         setUser(
           updatedUser.username,
           updatedUser.email,
@@ -74,7 +76,13 @@ export default function ModalPayment({ show, setShow }) {
           updatedUser.premium.premiumStatus
         );
       } else {
-        setAlert({ show: true, error: data.message });
+        dispatch(
+          alertMessage({
+            value: true,
+            message: data.message,
+            variant: "danger",
+          })
+        );
       }
     });
   };
@@ -82,11 +90,11 @@ export default function ModalPayment({ show, setShow }) {
   return (
     <>
       <Modal show={show} onHide={() => setShow(false)} className="modalPayment">
-        {alert.show && (
+        {alert.value && (
           <Alert
-            variant="danger"
+            variant={alert.variant}
             onClose={() => {
-              setAlert({ ...alert, show: false });
+              dispatch(alertMessage({ ...alert, value: false }));
             }}
             dismissible
           >

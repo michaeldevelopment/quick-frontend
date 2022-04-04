@@ -12,22 +12,24 @@ import Alert from "react-bootstrap/Alert";
 
 import axios from "axios";
 
-import { useAuth } from "../Context/useAuth";
-
 import quickIcon from "../Images/small-icon.png";
 import req from "../axiosReq/index";
 import "./pages.scss";
+
+import { useSelector, useDispatch } from "react-redux";
+import { addRecipe } from "../Store/actions";
 
 export default function CreateRecipe() {
   const [handleInputs, setHandleInputs] = useState([]);
   const [handleIngredients, setHandleIngredients] = useState([]);
   const [showSpinner, setShowSpinner] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
-  const [alert, setAlert] = useState({});
   const [check, setCheck] = useState();
   const navigate = useNavigate();
-  const auth = useAuth();
-  const { user } = auth;
+
+  const userData = useSelector((state) => state.userData);
+  const alert = useSelector((state) => state.alert);
+  const dispatch = useDispatch();
 
   const handleCheckbox = (e) => {
     setCheck(e.target.value);
@@ -67,7 +69,13 @@ export default function CreateRecipe() {
           setShowSpinner(false);
         })
         .catch((error) => {
-          setAlert({ value: true, message: error.message, type: "danger" });
+          dispatch(
+            alertMessage({
+              value: true,
+              message: error.message,
+              type: "danger",
+            })
+          );
         });
     }
   };
@@ -99,20 +107,15 @@ export default function CreateRecipe() {
 
     req.createRecipeReq(recipe).then(({ data }) => {
       if (data.error) {
-        setAlert({
-          value: data.error,
-          message: data.message,
-          variant: "danger",
-        });
+        dispatch(
+          alertMessage({
+            value: data.error,
+            message: data.message,
+            variant: "danger",
+          })
+        );
       } else {
-        setAlert({
-          value: true,
-          message: data.message,
-          variant: "success",
-        });
-        console.log(data.savedRecipe);
-
-        auth.addRecipes(data.savedRecipe);
+        dispatch(addRecipe(data.savedRecipe));
         navigate("/recipecreated");
       }
     });
@@ -232,7 +235,7 @@ export default function CreateRecipe() {
               </FloatingLabel>
             </Form.Group>
 
-            {user?.premium && (
+            {userData?.premium && (
               <Form.Group
                 className="mb-3 d-flex justify-content-center"
                 id="formGridCheckbox"

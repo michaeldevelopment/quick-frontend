@@ -8,7 +8,6 @@ import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
-import Spinner from "react-bootstrap/Spinner";
 import Badge from "react-bootstrap/Badge";
 import { FaStar } from "react-icons/fa";
 import { ImBlocked } from "react-icons/im";
@@ -19,10 +18,16 @@ import { useParams } from "react-router-dom";
 import { formatDistance } from "date-fns";
 import { es } from "date-fns/locale";
 
-import req from "../axiosReq/index";
-import "./components.scss";
+import { useSelector, useDispatch } from "react-redux";
 
-import { useAuth } from "../Context/useAuth";
+import {
+  handleDeleteRecipe,
+  loadRecipeToFav,
+  alertMessage,
+  handleDeleteFavRecipe,
+} from "../Store/actions";
+
+import "./components.scss";
 
 const Recipe = ({
   title,
@@ -37,41 +42,43 @@ const Recipe = ({
   img,
   textPage,
 }) => {
+  const userData = useSelector((state) => state.userData);
+  const alert = useSelector((state) => state.alert);
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-  const [showSpinner, setShowSpinner] = useState(false);
-  const [alert, setAlert] = useState({});
-  const auth = useAuth();
   const { id } = useParams();
-  const { user } = auth;
+
+  const dispatch = useDispatch();
 
   const addToFav = (e) => {
     e.preventDefault();
-    req.addToFavReq(idRecipe).then(({ data }) => {
-      data.error
-        ? setAlert({ ...data, show: true, variant: "danger" })
-        : setAlert({ ...data, show: true, variant: "success" });
-      setShowSpinner(true);
-    });
+    // req.addToFavReq(idRecipe).then(({ data }) => {
+    //   data.error
+    //     ? dispatch(alertMessage({ ...data, value: true, variant: "danger" }))
+    //     : dispatch(alertMessage({ ...data, value: true, variant: "success" }));
+    // });
+    dispatch(loadRecipeToFav(idRecipe));
   };
 
   const handleDelete = (e) => {
     e.preventDefault;
-    if (textPage.includes("recetas")) {
-      req.deleteRecipeReq(idRecipe).then(({ data }) => {
-        data.error
-          ? setAlert({ ...data, show: true, variant: "danger" })
-          : setAlert({ ...data, show: true, variant: "success" });
-        setShowSpinner(true);
-      });
-    } else {
-      req.deleteFavReq(idRecipe).then(({ data }) => {
-        data.error
-          ? setAlert({ ...data, show: true, variant: "danger" })
-          : setAlert({ ...data, show: true, variant: "success" });
-        setShowSpinner(true);
-      });
-    }
+    textPage.includes("recetas")
+      ? // req.deleteRecipeReq(idRecipe).then(({ data }) => {
+        //   data.error
+        //     ? dispatch(alertMessage({ ...data, value: true, variant: "danger" }))
+        //     : dispatch(
+        //         alertMessage({ ...data, value: true, variant: "success" })
+        //       );
+        // });
+        dispatch(handleDeleteRecipe(idRecipe))
+      : // req.deleteFavReq(idRecipe).then(({ data }) => {
+        //   data.error
+        //     ? dispatch(alertMessage({ ...data, value: true, variant: "danger" }))
+        //     : dispatch(
+        //         alertMessage({ ...data, value: true, variant: "success" })
+        //       );
+        // });
+        dispatch(handleDeleteFavRecipe(idRecipe));
   };
 
   return (
@@ -112,7 +119,7 @@ const Recipe = ({
             <Button variant="success" onClick={() => setShowDelete(true)}>
               Eliminar de {textPage}
             </Button>
-          ) : !premium || user?.premium ? (
+          ) : !premium || userData?.premium ? (
             <Button variant="danger" onClick={() => setShow(true)}>
               Ver más
             </Button>
@@ -132,12 +139,11 @@ const Recipe = ({
         centered
         className="modalRecipe"
       >
-        {alert.show && (
+        {alert.value && (
           <Alert
             variant={alert.variant}
             onClose={() => {
-              setAlert({ ...alert, show: false });
-              setShowSpinner(false);
+              dispatch(alertMessage({ ...alert, value: false }));
             }}
             dismissible
           >
@@ -146,7 +152,7 @@ const Recipe = ({
         )}
         <Modal.Header closeButton>
           <Modal.Title>{title} </Modal.Title>
-          {user?.username && (
+          {userData?.username && (
             <OverlayTrigger
               placement="right"
               overlay={<Tooltip>Agregar a favoritos</Tooltip>}
@@ -161,7 +167,6 @@ const Recipe = ({
               </Button>
             </OverlayTrigger>
           )}
-          {showSpinner && <Spinner animation="border" variant="danger" />}
         </Modal.Header>
         <Modal.Body>
           <Row>
@@ -178,7 +183,6 @@ const Recipe = ({
                   </li>
                 ))}
               </ul>
-              {/* <p> {ingredients} </p> */}
             </Col>
           </Row>
           <hr />
@@ -195,12 +199,11 @@ const Recipe = ({
         centered
         className="modalRecipe"
       >
-        {alert.show && (
+        {alert.value && (
           <Alert
             variant={alert.variant}
             onClose={() => {
-              setAlert({ ...alert, show: false });
-              setShowSpinner(false);
+              dispatch(alertMessage({ ...alert, value: false }));
             }}
             dismissible
           >
@@ -209,7 +212,6 @@ const Recipe = ({
         )}
         <Modal.Header>
           <Modal.Title> ¿Estás seguro? </Modal.Title>
-          {showSpinner && <Spinner animation="border" variant="danger" />}
         </Modal.Header>
         <Modal.Body>
           <p>

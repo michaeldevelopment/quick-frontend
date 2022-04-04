@@ -4,16 +4,15 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
 import Alert from "react-bootstrap/Alert";
-import req from "../axiosReq/index";
-import { useAuth } from "../Context/useAuth";
-import { setUser, setToken } from "../Session/dataUser";
+
+import { useSelector, useDispatch } from "react-redux";
+import { userAuth, alertMessage } from "../Store/actions";
 
 export default function SignUp() {
   const [handleInputs, setHandleInputs] = useState([]);
-  const [alert, setAlert] = useState({});
-  const auth = useAuth();
+  const alert = useSelector((state) => state.alert);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setHandleInputs({ ...handleInputs, [e.target.name]: e.target.value });
@@ -38,30 +37,16 @@ export default function SignUp() {
         username,
         password,
       };
-      req.signUpReq(newUser).then(({ data }) => {
-        if (data.error) {
-          setAlert({
-            value: data.error,
-            message: data.message,
-            variant: "danger",
-          });
-        } else {
-          setAlert({
-            value: true,
-            message: "El usuario se ha creado",
-            variant: "success",
-          });
-          auth.loginUser(data.username, data.email, data.id, data.premium);
-          setUser(data.username, data.email, data.id, data.premium);
-          setToken(data.token);
-        }
-      });
+
+      dispatch(userAuth(newUser, "signUp"));
     } else {
-      setAlert({
-        value: true,
-        message: "Las contraseñas no son iguales",
-        variant: "danger",
-      });
+      dispatch(
+        alertMessage({
+          value: true,
+          message: "Las contraseñas no son iguales",
+          variant: "danger",
+        })
+      );
     }
   };
 
@@ -70,7 +55,7 @@ export default function SignUp() {
       {alert.value && (
         <Alert
           variant={alert.variant}
-          onClose={() => setAlert({ ...alert, value: false })}
+          onClose={() => dispatch(alertMessage({ ...alert, value: false }))}
           dismissible
         >
           <p>{alert.message}</p>
@@ -137,7 +122,7 @@ export default function SignUp() {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="formValidPassword">
           <Form.Label>Ingresa nuevamente tu contraseña</Form.Label>
           <Form.Control
             type="password"
