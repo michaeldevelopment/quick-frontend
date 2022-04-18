@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 
 export default function MyRecipes() {
   const recipes = useSelector((state) => state.recipes);
-  const dataUser = useSelector((state) => state.dataUser);
+  const userData = useSelector((state) => state.userData);
   const { id } = useParams();
 
   const myRecipes = recipes.filter((recipe) => recipe.user.id === id);
@@ -26,7 +26,7 @@ export default function MyRecipes() {
             myRecipes.map((recipe) => (
               <Recipe
                 title={recipe.title}
-                username={dataUser?.username}
+                username={userData?.username}
                 category={recipe.category}
                 food_hour={recipe.food_hour}
                 ingredients={recipe.ingredients}

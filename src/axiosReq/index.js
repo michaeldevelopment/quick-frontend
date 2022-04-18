@@ -10,7 +10,7 @@ const loginReq = async (obj) => {
   return await axios.post(`${config.apiUrl}/users/login`, obj);
 };
 
-const getUserDataReq = async (userId) => {
+const getFavRecipesReq = async (userId) => {
   return await axios.get(`${config.apiUrl}/users/${userId}`, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
@@ -84,10 +84,10 @@ export default {
   getRecipesReq,
   createRecipeReq,
   addToFavReq,
-  getUserDataReq,
   deleteRecipeReq,
   deleteFavReq,
   makePaymentReq,
   passwordRecoveryReq,
   passwordResetReq,
+  getFavRecipesReq,
 };

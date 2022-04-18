@@ -1,26 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Recipe from "../Components/Recipe";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
 import { useSelector } from "react-redux";
+
 import "./pages.scss";
 
 export default function MyFavs() {
-  const dataUser = useSelector((state) => state.dataUser);
   const myFavRecipes = useSelector((state) => state.myFavs);
+  const userData = useSelector((state) => state.userData);
+
+  console.log(myFavRecipes);
 
   return (
     <>
       <Container>
         <h1> Mis favoritos </h1>
         <Row>
-          {myFavRecipes.length ? (
+          {myFavRecipes?.length ? (
             myFavRecipes.map((recipe) => (
               <Recipe
                 title={recipe.title}
-                username={dataUser?.username}
+                username={userData?.username}
                 category={recipe.category}
                 food_hour={recipe.food_hour}
                 ingredients={recipe.ingredients}

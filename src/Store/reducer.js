@@ -4,6 +4,8 @@ function reducer(prevState = initialState, action) {
   switch (action.type) {
     case "loadRecipes":
       return { ...prevState, recipes: action.payload };
+    case "loadFavRecipes":
+      return { ...prevState, myFavs: action.payload };
     case "loadUser":
       const user = {
         username: action.payload.username,
@@ -14,7 +16,6 @@ function reducer(prevState = initialState, action) {
       return {
         ...prevState,
         userData: user,
-        myFavs: action.payload.favRecipes,
       };
     case "logoutUser":
       return {

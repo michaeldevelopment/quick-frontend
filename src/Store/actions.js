@@ -16,6 +16,11 @@ export const loadRecipes = (recipes) => ({
   payload: recipes,
 });
 
+export const loadFavRecipes = (recipes) => ({
+  type: "loadFavRecipes",
+  payload: recipes,
+});
+
 export const alertMessage = (alert) => ({
   type: "alertMessage",
   payload: alert,
@@ -71,8 +76,10 @@ export const userAuth = (dataLogin, authType) => async (dispatch) => {
     email: userData.email,
     id: userData.id,
     premium: userData.premium,
-    favRecipes: userData.favRecipes,
+    favRecipes: userData?.favRecipes,
   };
+
+  if (authType === "login") dispatch(loadFavRecipes(user.favRecipes));
 
   const { username, email, id, premium, token } = userData;
 
@@ -85,7 +92,18 @@ export const userAuth = (dataLogin, authType) => async (dispatch) => {
 
 export const fetchRecipes = () => async (dispatch) => {
   const recipes = await req.getRecipesReq().then((response) => response.data);
+
   dispatch(loadRecipes(recipes));
+};
+
+export const fetchFavRecipes = (idUser) => async (dispatch) => {
+  const favRecipes = await req
+    .getFavRecipesReq(idUser)
+    .then((response) => response.data.favoriteRecipes);
+
+  console.log(favRecipes);
+
+  dispatch(loadFavRecipes(favRecipes));
 };
 
 export const loadRecipeToFav = (idRecipe) => async (dispatch) => {

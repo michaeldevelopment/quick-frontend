@@ -2,7 +2,7 @@ import React, { useEffect, Suspense } from "react";
 
 import { Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchRecipes } from "./Store/actions";
+import { fetchRecipes, fetchFavRecipes } from "./Store/actions";
 
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
@@ -28,11 +28,13 @@ const MyRecipes = React.lazy(() => import("./Pages/MyRecipes"));
 const MyFavs = React.lazy(() => import("./Pages/MyFavs"));
 
 function App() {
+  const userData = useSelector((state) => state.userData);
   const allRecipes = useSelector((state) => state.recipes);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchRecipes());
+    userData?.username ? dispatch(fetchFavRecipes(userData?.id)) : null;
   }, []);
 
   return (
