@@ -1,30 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { BsCheckLg, BsXLg } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import "./components.scss";
 
 import ModalPayment from "./ModalPayment";
+import useHandleModal from "../customHooks/useHandleModal";
 
 const CardPricing = ({ text }) => {
-  const [show, setShow] = useState(false);
-  const navigate = useNavigate();
   const userData = useSelector((state) => state.userData);
 
-  const handleModal = () => {
-    if (text === "free") {
-      navigate("/signup");
-    } else {
-      setShow(true);
-    }
-  };
-
-  const redirectLogin = () => {
-    navigate("/login");
-  };
+  const { handleRedirect, show, setShow } = useHandleModal(
+    text,
+    userData?.username
+  );
 
   return (
     <>
@@ -32,7 +23,7 @@ const CardPricing = ({ text }) => {
         <Card.Header>
           <h2>
             {text === "free" ? (
-              "Free"
+              Free
             ) : (
               <span className="text-danger"> Premium </span>
             )}
@@ -53,46 +44,38 @@ const CardPricing = ({ text }) => {
             )}
           </Card.Title>
 
-          {text === "free" ? (
-            <ul className="list-unstyled">
-              <li className="border-bottom my-3">
-                <BsCheckLg className="text-success" /> Ver recetas de otros
-                Quickers
-              </li>
-              <li className="border-bottom my-3">
-                <BsCheckLg className="text-success" /> Agregar recetas de otros
-                Quickers a tu sección de Favoritos
-              </li>
+          <ul className="list-unstyled">
+            <li className="border-bottom my-3">
+              <BsCheckLg className="text-success" /> Ver recetas de otros
+              Quickers
+            </li>
+            <li className="border-bottom my-3">
+              <BsCheckLg className="text-success" /> Agregar recetas de otros
+              Quickers a tu sección de Favoritos
+            </li>
+            {text === "free" ? (
               <li className="border-bottom my-3">
                 <BsXLg className="text-danger" /> Crear tus propias recetas
               </li>
-            </ul>
-          ) : (
-            <ul className="list-unstyled">
-              <li className="border-bottom my-3">
-                <BsCheckLg className="text-success" /> Ver recetas de otros
-                Quickers
-              </li>
-              <li className="border-bottom my-3">
-                <BsCheckLg className="text-success" /> Agregar recetas de otros
-                Quickers a tu sección de Favoritos
-              </li>
-              <li className="border-bottom my-3">
-                <BsCheckLg className="text-success" /> Agregar recetas de otros
-                Quickers Premium
-              </li>
-              <li className="border-bottom my-3">
-                <BsCheckLg className="text-success" /> Crear tus propias recetas
-                tipo Free o Premium
-              </li>
-            </ul>
-          )}
+            ) : (
+              <span>
+                <li className="border-bottom my-3">
+                  <BsCheckLg className="text-success" /> Agregar recetas de
+                  otros Quickers Premium
+                </li>
+                <li className="border-bottom my-3">
+                  <BsCheckLg className="text-success" /> Crear tus propias
+                  recetas tipo Free o Premium
+                </li>
+              </span>
+            )}
+          </ul>
         </Card.Body>
         <Button
           variant={text === "free" ? "dark" : "danger"}
           size="lg"
           className="buttonPricing"
-          onClick={userData?.username ? handleModal : redirectLogin}
+          onClick={handleRedirect}
         >
           {text === "free" ? "Registrarme gratis" : "Obtener membresía"}
         </Button>
