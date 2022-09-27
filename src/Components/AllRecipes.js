@@ -11,13 +11,13 @@ export default function AllRecipes({ recipes }) {
         <Container className="text-center my-4">
           <h3> Recetas Premium </h3>
           <Row>
-            <Recipes recipes={recipes} />
+            <Recipes recipes={recipes} isPremium={true} />
           </Row>
         </Container>
         <Container className="text-center">
           <h3> Recetas Free </h3>
           <Row>
-            <Recipes recipes={recipes} />
+            <Recipes recipes={recipes} isPremium={false} />
           </Row>
         </Container>
       </div>
