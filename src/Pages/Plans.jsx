@@ -6,8 +6,11 @@ import Row from "react-bootstrap/Row";
 import { useSelector } from "react-redux";
 import useHandleModal from "../customHooks/useHandleModal";
 
-import CardPricing from "../Components/CardPricing";
-import CardPricingButton from "../Components/CardPricingButton";
+import CardPricing from "../Components/user-plan/CardPricing";
+import CardPricingButton from "../Components/user-plan/CardPricingButton";
+import ModalPayment from "../Components/ModalPayment";
+
+import { cardDetailsInfo } from "../Components/user-plan/CardDetailsInfo";
 
 import { useNavigate } from "react-router-dom";
 
@@ -20,6 +23,7 @@ export default function Plans() {
   const premium = userData?.premium;
 
   const { handleOpenModal, show, setShow } = useHandleModal(username, premium);
+  const { freePlan, premiumPlan } = cardDetailsInfo;
 
   const handleFunctionRedirect = () => navigate("/login");
 
@@ -28,7 +32,12 @@ export default function Plans() {
       <Row>
         <Col lg={6}>
           {!Boolean(username) && (
-            <CardPricing text="free" show={show} setShow={setShow}>
+            <CardPricing
+              headerText="Free"
+              headerStyleText=""
+              price="$0"
+              detailInfo={freePlan}
+            >
               <CardPricingButton
                 variant="dark"
                 onClickFunction={handleFunctionRedirect}
@@ -39,7 +48,12 @@ export default function Plans() {
         </Col>
         <Col lg={6}>
           {!premium && (
-            <CardPricing text="premium" show={show} setShow={setShow}>
+            <CardPricing
+              headerText="Premium"
+              headerStyleText="danger"
+              price="$8.99"
+              detailInfo={premiumPlan}
+            >
               <CardPricingButton
                 variant="danger"
                 onClickFunction={handleOpenModal}
@@ -47,6 +61,7 @@ export default function Plans() {
               />
             </CardPricing>
           )}
+          <ModalPayment show={show} setShow={setShow} />
         </Col>
       </Row>
     </Container>
