@@ -12,8 +12,6 @@ export default function MyFavs() {
   const myFavRecipes = useSelector((state) => state.myFavs);
   const userData = useSelector((state) => state.userData);
 
-  console.log(myFavRecipes);
-
   return (
     <>
       <Container>
