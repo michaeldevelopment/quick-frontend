@@ -20,7 +20,7 @@ import Plans from "./Pages/Plans";
 
 import Page404 from "./Pages/Page404";
 
-import Navigation from "./Components/Navigation";
+import Navigation from "./Components/navigation/Navigation";
 
 import Spinner from "react-bootstrap/Spinner";
 
