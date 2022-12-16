@@ -76,13 +76,11 @@ const Recipe = ({
           />
           <CardFooterRecipe username={username} date={date} />
 
-          {id && (
+          {id ? (
             <Button variant="success" onClick={() => setShowDelete(true)}>
               Eliminar de {textPage}
             </Button>
-          )}
-
-          {!premium || userData?.premium ? (
+          ) : !premium || userData?.premium ? (
             <Button variant="danger" onClick={() => setShow(true)}>
               Ver más
             </Button>
