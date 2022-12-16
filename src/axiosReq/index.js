@@ -78,6 +78,10 @@ const passwordRecoveryReq = async (email) => {
   return await axios.post(`${config.apiUrl}/users/passwordrecovery`, email);
 };
 
+const uploadPhotoReq = async (apiUrl, formData) => {
+  return await axios.post(apiUrl, formData);
+};
+
 export default {
   signUpReq,
   loginReq,
@@ -90,4 +94,5 @@ export default {
   passwordRecoveryReq,
   passwordResetReq,
   getFavRecipesReq,
+  uploadPhotoReq,
 };

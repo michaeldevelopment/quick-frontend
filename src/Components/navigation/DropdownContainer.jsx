@@ -34,6 +34,7 @@ export default function DropdownContainer({ userData, logOutFunction }) {
           <DropdownItemWithFunction
             onClickFunction={logOutFunction}
             identifier="logout"
+            text="Cerrar sesión"
           />
         </Dropdown.Menu>
       </Dropdown>
