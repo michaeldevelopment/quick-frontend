@@ -37,7 +37,6 @@ const Recipe = ({
   textPage,
 }) => {
   const userData = useSelector((state) => state.userData);
-  console.log(userData);
   const alert = useSelector((state) => state.alert);
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
