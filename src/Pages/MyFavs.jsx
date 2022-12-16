@@ -18,19 +18,12 @@ export default function MyFavs() {
         <h1> Mis favoritos </h1>
         <Row>
           {myFavRecipes?.length ? (
-            myFavRecipes.map((recipe) => (
+            myFavRecipes.map(({ id, ...recipe }) => (
               <Recipe
-                title={recipe.title}
+                {...recipe}
+                key={id}
+                idRecipe={id}
                 username={userData?.username}
-                category={recipe.category}
-                foodHour={recipe.food_hour}
-                ingredients={recipe.ingredients}
-                description={recipe.description}
-                idRecipe={recipe.id}
-                date={recipe.createdAt}
-                premium={recipe.premium}
-                img={recipe.photos}
-                key={recipe.id}
                 textPage="mis favoritos"
               />
             ))
