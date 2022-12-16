@@ -1,7 +1,8 @@
 import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
+import { Link } from "react-router-dom";
 
-const DropdownItem = ({route, text}) => {
+const DropdownItem = ({ route, text }) => {
   return (
     <Dropdown.Item
       as={Link}
