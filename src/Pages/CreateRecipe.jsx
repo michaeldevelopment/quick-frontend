@@ -10,9 +10,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { addRecipe, alertMessage } from "../Store/actions";
 
 import CreateRecipeForm from "../Components/CreateRecipeForm";
+import useHandleChange from "../customHooks/useHandleChange";
 
 export default function CreateRecipe() {
-  const [handleInputs, setHandleInputs] = useState([]);
   const [handleIngredients, setHandleIngredients] = useState([]);
   const [showSpinner, setShowSpinner] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
@@ -23,6 +23,12 @@ export default function CreateRecipe() {
   const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
 
+  const {
+    onChange: handleChange,
+    handleInputs,
+    setHandleInputs,
+  } = useHandleChange();
+
   const handleCheckbox = (e) => {
     setCheck(e.target.value);
   };
@@ -32,10 +38,6 @@ export default function CreateRecipe() {
       ...handleIngredients,
       [target.name]: target.value,
     });
-  };
-
-  const handleChange = ({ target }) => {
-    setHandleInputs({ ...handleInputs, [target.name]: target.value });
   };
 
   const handlePhotoChange = ({ target }) => {
@@ -131,7 +133,9 @@ export default function CreateRecipe() {
       {alert.value && (
         <Alert
           variant={alert.variant}
-          onClose={() => setAlert({ ...alert, value: false })}
+          onClose={() => {
+            dispatch(alertMessage({ ...alert, value: false }));
+          }}
           dismissible
         >
           <p>{alert.message}</p>
