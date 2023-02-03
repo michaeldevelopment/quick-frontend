@@ -1,19 +1,17 @@
 import { initialState } from "./initialState";
 
 function reducer(prevState = initialState, action) {
-  const { type, payload } = action;
-
-  switch (type) {
+  switch (action.type) {
     case "loadRecipes":
-      return { ...prevState, recipes: payload };
+      return { ...prevState, recipes: action.payload };
     case "loadFavRecipes":
-      return { ...prevState, myFavs: payload };
+      return { ...prevState, myFavs: action.payload };
     case "loadUser":
       const user = {
-        username: payload.username,
-        email: payload.email,
-        id: payload.id,
-        premium: payload.premium,
+        username: action.payload.username,
+        email: action.payload.email,
+        id: action.payload.id,
+        premium: action.payload.premium,
       };
       return {
         ...prevState,
@@ -22,43 +20,45 @@ function reducer(prevState = initialState, action) {
     case "logoutUser":
       return {
         ...prevState,
-        userData: payload,
-        userToken: payload,
+        userData: action.payload,
+        userToken: action.payload,
       };
     case "loadToken":
-      return { ...prevState, userToken: payload };
+      return { ...prevState, userToken: action.payload };
     case "alertMessage":
-      return { ...prevState, alert: payload };
+      return { ...prevState, alert: action.payload };
     case "deleteRecipe":
       return {
         ...prevState,
-        recipes: prevState.recipes.filter((recipe) => recipe.id !== payload),
+        recipes: prevState.recipes.filter(
+          (recipe) => recipe.id !== action.payload
+        ),
         myFavs: prevState.myFavs.filter(
-          (favRecipe) => favRecipe.id !== payload
+          (favRecipe) => favRecipe.id !== action.payload
         ),
       };
     case "addRecipe":
       return {
         ...prevState,
-        recipes: prevState.recipes.concat(payload),
+        recipes: prevState.recipes.concat(action.payload),
       };
     case "authPremiumUser":
       return {
         ...prevState,
-        userData: { ...prevState.userData, premium: payload },
+        userData: { ...prevState.userData, premium: action.payload },
       };
     case "addRecipeToFav":
       return {
         ...prevState,
         myFavs: prevState.myFavs.concat(
-          prevState.recipes.find((recipe) => recipe.id === payload)
+          prevState.recipes.find((recipe) => recipe.id === action.payload)
         ),
       };
     case "deleteFavRecipe":
       return {
         ...prevState,
         myFavs: prevState.myFavs.filter(
-          (favRecipe) => favRecipe.id !== payload
+          (favRecipe) => favRecipe.id !== action.payload
         ),
       };
     default:

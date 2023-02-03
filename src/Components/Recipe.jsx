@@ -52,14 +52,33 @@ const Recipe = ({
 
   const addToFav = (e) => {
     e.preventDefault();
+    // req.addToFavReq(idRecipe).then(({ data }) => {
+    //   data.error
+    //     ? dispatch(alertMessage({ ...data, value: true, variant: "danger" }))
+    //     : dispatch(alertMessage({ ...data, value: true, variant: "success" }));
+    // });
     dispatch(loadRecipeToFav(idRecipe));
   };
 
   const handleDelete = (e) => {
     e.preventDefault;
     textPage.includes("recetas")
-      ? dispatch(handleDeleteRecipe(idRecipe))
-      : dispatch(handleDeleteFavRecipe(idRecipe));
+      ? // req.deleteRecipeReq(idRecipe).then(({ data }) => {
+        //   data.error
+        //     ? dispatch(alertMessage({ ...data, value: true, variant: "danger" }))
+        //     : dispatch(
+        //         alertMessage({ ...data, value: true, variant: "success" })
+        //       );
+        // });
+        dispatch(handleDeleteRecipe(idRecipe))
+      : // req.deleteFavReq(idRecipe).then(({ data }) => {
+        //   data.error
+        //     ? dispatch(alertMessage({ ...data, value: true, variant: "danger" }))
+        //     : dispatch(
+        //         alertMessage({ ...data, value: true, variant: "success" })
+        //       );
+        // });
+        dispatch(handleDeleteFavRecipe(idRecipe));
   };
 
   return (

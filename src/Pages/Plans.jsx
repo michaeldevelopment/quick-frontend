@@ -8,7 +8,7 @@ import useHandleModal from "../customHooks/useHandleModal";
 
 import CardPricing from "../Components/user-plan/CardPricing";
 import CardPricingButton from "../Components/user-plan/CardPricingButton";
-import ModalPayment from "../Components/payment/ModalPayment";
+import ModalPayment from "../Components/ModalPayment";
 
 import { cardDetailsInfo } from "../Components/user-plan/CardDetailsInfo";
 
