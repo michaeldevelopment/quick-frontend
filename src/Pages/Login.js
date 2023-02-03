@@ -10,7 +10,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { userAuth, alertMessage } from "../Store/actions";
 
 import { useNavigate } from "react-router-dom";
-import useHandleChange from "../customHooks/useHandleChange";
 
 export default function Login() {
   const alert = useSelector((state) => state.alert);
@@ -18,7 +17,11 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { onChange, handleInputs } = useHandleChange();
+  const [handleInputs, setHandleInputs] = useState([]);
+
+  const handleChange = (e) => {
+    setHandleInputs({ ...handleInputs, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +57,7 @@ export default function Login() {
             <Form.Control
               id="inlineFormInputGroup"
               name="username"
-              onChange={onChange}
+              onChange={handleChange}
               data-test-id="username-login-form"
             />
           </InputGroup>
@@ -65,7 +68,7 @@ export default function Login() {
           <Form.Control
             type="password"
             name="password"
-            onChange={onChange}
+            onChange={handleChange}
             data-test-id="password-login-form"
           />
         </Form.Group>

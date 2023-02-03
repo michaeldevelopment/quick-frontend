@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Recipe from "../Components/recipeContainer/Recipe";
+import Recipe from "../Components/Recipe";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -12,18 +12,27 @@ export default function MyFavs() {
   const myFavRecipes = useSelector((state) => state.myFavs);
   const userData = useSelector((state) => state.userData);
 
+  console.log(myFavRecipes);
+
   return (
     <>
       <Container>
         <h1> Mis favoritos </h1>
         <Row>
           {myFavRecipes?.length ? (
-            myFavRecipes.map(({ id, ...recipe }) => (
+            myFavRecipes.map((recipe) => (
               <Recipe
-                {...recipe}
-                key={id}
-                idRecipe={id}
+                title={recipe.title}
                 username={userData?.username}
+                category={recipe.category}
+                food_hour={recipe.food_hour}
+                ingredients={recipe.ingredients}
+                description={recipe.description}
+                idRecipe={recipe.id}
+                date={recipe.createdAt}
+                premium={recipe.premium}
+                img={recipe.photos}
+                key={recipe.id}
                 textPage="mis favoritos"
               />
             ))

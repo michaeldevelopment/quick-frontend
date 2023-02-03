@@ -101,6 +101,8 @@ export const fetchFavRecipes = (idUser) => async (dispatch) => {
     .getFavRecipesReq(idUser)
     .then((response) => response.data.favoriteRecipes);
 
+  console.log(favRecipes);
+
   dispatch(loadFavRecipes(favRecipes));
 };
 
