@@ -7,5 +7,5 @@ export default function useHandleChange() {
     setHandleInputs({ ...handleInputs, [target.name]: target.value });
   };
 
-  return { onChange, handleInputs, setHandleInputs };
+  return { onChange, handleInputs };
 }

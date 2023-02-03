@@ -30,13 +30,12 @@ const Recipe = ({
   food_hour,
   ingredients,
   description,
-  createdAt: date,
+  date,
   premium,
   idRecipe,
   photos,
   textPage,
 }) => {
-  console.log(date);
   const userData = useSelector((state) => state.userData);
   const alert = useSelector((state) => state.alert);
   const [show, setShow] = useState(false);

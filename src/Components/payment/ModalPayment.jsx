@@ -4,23 +4,24 @@ import Alert from "react-bootstrap/Alert";
 
 import { useNavigate } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { alertMessage } from "../../Store/actions";
 
 import PaymentForm from "./PaymentForm";
 import PaymentSuccess from "./PaymentSuccess";
 import useHandlePayment from "../../customHooks/useHandlePayment";
-import useHandleChange from "../../customHooks/useHandleChange";
 
 export default function ModalPayment({ show, setShow }) {
   const alert = useSelector((state) => state.alert);
+  const [handleInputs, setHandleInputs] = useState([]);
   const [success, setSuccess] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const { onChange: handleChange, handleInputs } = useHandleChange();
+  const handleChange = ({ target }) => {
+    setHandleInputs({ ...handleInputs, [target.name]: target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

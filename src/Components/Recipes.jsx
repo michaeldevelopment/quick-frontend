@@ -9,7 +9,7 @@ const Recipes = ({ recipes, isPremium }) => {
       {!isPremium && recipes.length ? (
         recipes
           .filter((recipe) => recipe.premium === isPremium)
-          .map(({ id, user, ...recipe }) => (
+          .map(({ id, ...recipe }) => (
             <Suspense
               fallback={
                 <Spinner
@@ -20,12 +20,7 @@ const Recipes = ({ recipes, isPremium }) => {
               }
               key={id}
             >
-              <Recipe
-                {...recipe}
-                idRecipe={id}
-                key={id}
-                username={user.username}
-              />
+              <Recipe {...recipe} idRecipe={id} key={id} />
             </Suspense>
           ))
       ) : (

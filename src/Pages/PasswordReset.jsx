@@ -1,21 +1,27 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Alert, Container, Form, Button } from "react-bootstrap";
 import req from "../axiosReq/index";
-import useHandleChange from "../customHooks/useHandleChange";
 
 export default function PasswordReset() {
+  const [newPassword, setNewPassword] = useState();
+  const [validNewPassword, setValidNewPassword] = useState();
   const [alert, setAlert] = useState();
   const [message, setMessage] = useState();
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { onChange, handleInputs } = useHandleChange();
+  const handleNewPassword = (e) => {
+    setNewPassword(e.target.value);
+  };
+
+  const handleValidNewPassword = (e) => {
+    setValidNewPassword(e.target.value);
+  };
 
   const handleResetPassword = (e) => {
     e.preventDefault();
-
-    const { newPassword, validNewPassword } = handleInputs;
 
     if (newPassword === validNewPassword) {
       const userChangePassword = {
@@ -55,9 +61,8 @@ export default function PasswordReset() {
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control
             type="password"
-            name="newPassword"
             placeholder=""
-            onChange={onChange}
+            onChange={handleNewPassword}
             data-test-id="passwordreset1-form"
           />
         </Form.Group>
@@ -66,9 +71,8 @@ export default function PasswordReset() {
           <Form.Label>Confirma escribiendola nuevamente</Form.Label>
           <Form.Control
             type="password"
-            name="validNewPassword"
             placeholder=""
-            onChange={onChange}
+            onChange={handleValidNewPassword}
             data-test-id="passwordreset2-form"
           />
         </Form.Group>
