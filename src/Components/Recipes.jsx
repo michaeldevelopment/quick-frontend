@@ -9,7 +9,7 @@ const Recipes = ({ recipes, isPremium }) => {
       {!isPremium && recipes.length ? (
         recipes
           .filter((recipe) => recipe.premium === isPremium)
-          .map(({ id, ...recipe }) => (
+          .map((recipe) => (
             <Suspense
               fallback={
                 <Spinner
@@ -18,9 +18,21 @@ const Recipes = ({ recipes, isPremium }) => {
                   className="mx-3"
                 />
               }
-              key={id}
+              key={recipe.id}
             >
-              <Recipe {...recipe} idRecipe={id} key={id} />
+              <Recipe
+                title={recipe.title}
+                username={recipe.user.username}
+                category={recipe.category}
+                foodHour={recipe.food_hour}
+                ingredients={recipe.ingredients}
+                description={recipe.description}
+                premium={recipe.premium}
+                idRecipe={recipe.id}
+                img={recipe.photos}
+                date={recipe.createdAt}
+                key={recipe.id}
+              />
             </Suspense>
           ))
       ) : (

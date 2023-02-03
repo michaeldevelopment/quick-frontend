@@ -27,13 +27,13 @@ const Recipe = ({
   title,
   username,
   category,
-  food_hour,
+  foodHour,
   ingredients,
   description,
   date,
   premium,
   idRecipe,
-  photos,
+  img,
   textPage,
 }) => {
   const userData = useSelector((state) => state.userData);
@@ -62,7 +62,7 @@ const Recipe = ({
         <Card className="recipeCard my-3">
           <Card.Img
             variant="top"
-            src={photos}
+            src={img}
             className="imgRecipe mx-auto rounded img-thumbnail"
           />
           <CardHeaderRecipe
@@ -71,7 +71,7 @@ const Recipe = ({
           />
           <CardBodyRecipe
             title={title}
-            foodHour={food_hour}
+            foodHour={foodHour}
             category={category}
           />
           <CardFooterRecipe username={username} date={date} />
@@ -95,7 +95,7 @@ const Recipe = ({
       <AddToFavModal
         show={show}
         setShow={setShow}
-        img={photos}
+        img={img}
         description={description}
         alert={alert}
         title={title}

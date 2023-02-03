@@ -23,12 +23,19 @@ export default function MyRecipes() {
         <h3> Mis recetas </h3>
         <Row>
           {myRecipes.length ? (
-            myRecipes.map(({ id, ...recipe }) => (
+            myRecipes.map((recipe) => (
               <Recipe
-                {...recipe}
-                key={id}
-                idRecipe={id}
+                title={recipe.title}
                 username={userData?.username}
+                category={recipe.category}
+                foodHour={recipe.food_hour}
+                ingredients={recipe.ingredients}
+                description={recipe.description}
+                idRecipe={recipe.id}
+                date={recipe.createdAt}
+                premium={recipe.premium}
+                img={recipe.photos}
+                key={recipe.id}
                 textPage="mis recetas"
               />
             ))
