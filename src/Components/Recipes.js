@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import Spinner from "react-bootstrap/Spinner";
 
-const Recipe = React.lazy(() => import("./Recipe"));
+const Recipe = React.lazy(() => import("../Components/Recipe"));
 
 const Recipes = ({ recipes, isPremium }) => {
   return (
