@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import Spinner from "react-bootstrap/Spinner";
 
-const Recipe = React.lazy(() => import("./recipeContainer/Recipe"));
+const Recipe = React.lazy(() => import("./Recipe"));
 
 const Recipes = ({ recipes, isPremium }) => {
   return (
@@ -24,7 +24,7 @@ const Recipes = ({ recipes, isPremium }) => {
                 title={recipe.title}
                 username={recipe.user.username}
                 category={recipe.category}
-                foodHour={recipe.food_hour}
+                food_hour={recipe.food_hour}
                 ingredients={recipe.ingredients}
                 description={recipe.description}
                 premium={recipe.premium}

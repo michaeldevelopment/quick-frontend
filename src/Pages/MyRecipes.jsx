@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-import Recipe from "../Components/recipeContainer/Recipe";
+import Recipe from "../Components/Recipe";
 
 import { useParams } from "react-router-dom";
 
@@ -28,7 +28,7 @@ export default function MyRecipes() {
                 title={recipe.title}
                 username={userData?.username}
                 category={recipe.category}
-                foodHour={recipe.food_hour}
+                food_hour={recipe.food_hour}
                 ingredients={recipe.ingredients}
                 description={recipe.description}
                 idRecipe={recipe.id}

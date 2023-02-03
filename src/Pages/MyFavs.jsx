@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Recipe from "../Components/recipeContainer/Recipe";
+import Recipe from "../Components/Recipe";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -23,7 +23,7 @@ export default function MyFavs() {
                 title={recipe.title}
                 username={userData?.username}
                 category={recipe.category}
-                foodHour={recipe.food_hour}
+                food_hour={recipe.food_hour}
                 ingredients={recipe.ingredients}
                 description={recipe.description}
                 idRecipe={recipe.id}
