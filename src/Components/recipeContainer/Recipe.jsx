@@ -36,6 +36,7 @@ const Recipe = ({
   photos,
   textPage,
 }) => {
+  console.log(date);
   const userData = useSelector((state) => state.userData);
   const alert = useSelector((state) => state.alert);
   const [show, setShow] = useState(false);
@@ -58,7 +59,7 @@ const Recipe = ({
 
   return (
     <>
-      <Col key={idRecipe} lg={4} md={6} sm={12}>
+      <Col key={idRecipe} lg={4} md={6} xs={12}>
         <Card className="recipeCard my-3">
           <Card.Img
             variant="top"

@@ -5,7 +5,7 @@ const Recipe = React.lazy(() => import("./recipeContainer/Recipe"));
 
 const Recipes = ({ recipes, isPremium }) => {
   return (
-    <>
+    <div>
       {!isPremium && recipes.length ? (
         recipes
           .filter((recipe) => recipe.premium === isPremium)
@@ -31,7 +31,7 @@ const Recipes = ({ recipes, isPremium }) => {
       ) : (
         <p> No existen recetas por el momento </p>
       )}
-    </>
+    </div>
   );
 };
 
