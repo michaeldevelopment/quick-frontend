@@ -17,7 +17,7 @@ import req from "../axiosReq/index";
 import "./pages.scss";
 
 import { useSelector, useDispatch } from "react-redux";
-import { addRecipe, alertMessage } from "../Store/actions";
+import { addRecipe } from "../Store/actions";
 
 export default function CreateRecipe() {
   const [handleInputs, setHandleInputs] = useState([]);

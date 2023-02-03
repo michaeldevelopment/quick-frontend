@@ -1,14 +1,14 @@
-import React, { Suspense } from "react";
+import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 
 const Recipe = React.lazy(() => import("../Components/Recipe"));
 
-const Recipes = ({ recipes, isPremium }) => {
+const Recipes = ({ recipes }) => {
   return (
     <div>
-      {!isPremium && recipes.length ? (
+      {recipes.length ? (
         recipes
-          .filter((recipe) => recipe.premium === isPremium)
+          .filter((recipe) => recipe.premium)
           .map((recipe) => (
             <Suspense
               fallback={

@@ -1,19 +1,29 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 import { BsCheckLg, BsXLg } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 import "./components.scss";
 
 import ModalPayment from "./ModalPayment";
+import useHandleModal from "../customHooks/useHandleModal";
 
-const CardPricing = ({ text, show, setShow, children }) => {
+const CardPricing = ({ text }) => {
+  const userData = useSelector((state) => state.userData);
+
+  const { handleRedirect, show, setShow } = useHandleModal(
+    text,
+    userData?.username
+  );
+
   return (
     <>
       <Card style={{ width: "25rem" }} className="mx-auto my-3 cardPricing">
         <Card.Header>
           <h2>
             {text === "free" ? (
-              "Free"
+              Free
             ) : (
               <span className="text-danger"> Premium </span>
             )}
@@ -61,7 +71,14 @@ const CardPricing = ({ text, show, setShow, children }) => {
             )}
           </ul>
         </Card.Body>
-        {children}
+        <Button
+          variant={text === "free" ? "dark" : "danger"}
+          size="lg"
+          className="buttonPricing"
+          onClick={handleRedirect}
+        >
+          {text === "free" ? "Registrarme gratis" : "Obtener membresía"}
+        </Button>
       </Card>
       <ModalPayment show={show} setShow={setShow} />
     </>
