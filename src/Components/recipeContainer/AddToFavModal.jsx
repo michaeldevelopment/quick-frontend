@@ -51,7 +51,6 @@ export default function AddToFavModal({
       )}
       <Modal.Header closeButton>
         <Modal.Title>{title} </Modal.Title>
-        {console.log(userData)}
         {userData?.username && (
           <OverlayTrigger
             placement="right"
