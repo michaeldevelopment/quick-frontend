@@ -5,7 +5,7 @@ import { authPremiumUser } from "../Store/actions";
 
 import { setUser } from "../Session/dataUser";
 
-const useHandlePayment = async (cardInfo, setSuccess, setShowSpinner) => {
+const useHandlePayment = async (cardInfo, setSuccess) => {
   setShowSpinner(true);
 
   const dispatch = useDispatch();

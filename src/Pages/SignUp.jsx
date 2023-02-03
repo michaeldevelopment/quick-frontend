@@ -9,13 +9,14 @@ import Alert from "react-bootstrap/Alert";
 import { useSelector, useDispatch } from "react-redux";
 import { userAuth, alertMessage } from "../Store/actions";
 
-import useHandleChange from "../customHooks/useHandleChange";
-
 export default function SignUp() {
+  const [handleInputs, setHandleInputs] = useState([]);
   const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
 
-  const { onChange, handleInputs } = useHandleChange();
+  const handleChange = (e) => {
+    setHandleInputs({ ...handleInputs, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,14 +70,14 @@ export default function SignUp() {
               aria-label="First name"
               name="firstName"
               placeholder="Nombre"
-              onChange={onChange}
+              onChange={handleChange}
               data-test-id="name-signup-form"
             />
             <Form.Control
               aria-label="Last name"
               name="lastName"
               placeholder="Apellido"
-              onChange={onChange}
+              onChange={handleChange}
               data-test-id="lastname-signup-form"
             />
           </InputGroup>
@@ -88,7 +89,7 @@ export default function SignUp() {
             type="email"
             placeholder="name@example.com"
             name="email"
-            onChange={onChange}
+            onChange={handleChange}
             data-test-id="email-signup-form"
           />
           <Form.Text className="text-muted">
@@ -105,7 +106,7 @@ export default function SignUp() {
             <Form.Control
               id="inlineFormInputGroup"
               name="username"
-              onChange={onChange}
+              onChange={handleChange}
               data-test-id="username-signup-form"
             />
           </InputGroup>
@@ -116,7 +117,7 @@ export default function SignUp() {
           <Form.Control
             type="password"
             name="password"
-            onChange={onChange}
+            onChange={handleChange}
             data-test-id="password-signup-form"
           />
         </Form.Group>
@@ -126,7 +127,7 @@ export default function SignUp() {
           <Form.Control
             type="password"
             name="validpassword"
-            onChange={onChange}
+            onChange={handleChange}
             data-test-id="validpassword-signup-form"
           />
         </Form.Group>
